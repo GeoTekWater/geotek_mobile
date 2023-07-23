@@ -6,6 +6,8 @@ import 'package:geo_tek/screens/sub_screen/home_page.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:otp/otp.dart';
+
 
 class AuuthController extends GetxController{
   static AuuthController authInstance = Get.find();
@@ -81,7 +83,6 @@ class AuuthController extends GetxController{
     }
   }
 
-
    void signInWithGoogle() async {
     try {
       GoogleSignInAccount? googleSignInAccount = await googleSign.signIn();
@@ -108,4 +109,48 @@ class AuuthController extends GetxController{
       print(e.toString());
     }
   }
+
+void sendOTPToEmail(String email) async {
+    try {
+      // Generate the OTP
+      final String otpCode = OTP.generateTOTPCodeString('YOUR_SECRET_KEY', DateTime.now().millisecondsSinceEpoch);
+
+      // Send the OTP to the user's email
+      await auth.sendPasswordResetEmail(email: email, actionCodeSettings: ActionCodeSettings(
+        url: 'https://www.example.com/reset_password?otp=$otpCode',
+        handleCodeInApp: true,
+        iOSBundleId: 'com.example.app',
+        androidPackageName: 'com.example.app',
+        androidInstallApp: true,
+        androidMinimumVersion: '16',
+        dynamicLinkDomain: 'example.page.link',
+      ));
+
+      Get.snackbar(
+        'OTP Sent',
+        'An OTP has been sent to your email address.',
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to send OTP. Please try again later.',
+        backgroundColor: Colors.red,
+      );
+      print(e);
+    }
+  }
+
+// void sendPasswordResetEmail(String email) async {
+//   //FirebaseAuth _auth = FirebaseAuth.instance;
+  
+//   try {
+//     await auth.sendPasswordResetEmail(email: email);
+//     print("Password reset email sent successfully to $email");
+//     // You can show a success message to the user or navigate to a success page.
+//   } catch (e) {
+//     print("Failed to send password reset email: $e");
+//     // Handle the error - You can show an error message to the user or log the error.
+//   }
+//}
+
 }
