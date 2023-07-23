@@ -2,6 +2,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geo_tek/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -36,65 +37,56 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  // Future<void> signupHandler() async {
-  //   if (!fullnameController.text.trim().isNotEmpty ||
-  //       !emailController.text.trim().isNotEmpty ||
-  //       !passwordController.text.trim().isNotEmpty ||
-  //       !confirmPasswordController.text.trim().isNotEmpty) {
-  //     Get.snackbar(
-  //       'ERROR!',
-  //       'Please ensure your fill in all fields in the form as the are required.',
-  //       colorText: Colors.white,
-  //       duration: Duration(seconds: 5),
-  //       backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
-  //     );
-  //   } else if (!emailPattern.hasMatch(emailController.text.trim())) {
-  //     Get.snackbar(
-  //       'ERROR!',
-  //       'Invalid email address',
-  //       colorText: Colors.white,
-  //       duration: Duration(seconds: 5),
-  //       backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
-  //     );
-  //   } else if (confirmPasswordController.text.trim() !=
-  //       passwordController.text.trim()) {
-  //     Get.snackbar(
-  //       'ERROR!',
-  //       'Passwords do not match',
-  //       colorText: Colors.white,
-  //       duration: Duration(seconds: 5),
-  //       backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
-  //     );
-  //   } else if (!passwordPattern.hasMatch(passwordController.text.trim())) {
-  //     Get.snackbar(
-  //       'ERROR!',
-  //       'Password must include a number, uppercase and lowercase alphabet',
-  //       colorText: Colors.white,
-  //       duration: Duration(seconds: 5),
-  //       backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
-  //     );
-  //   } else if (passwordController.text.trim().length <= 7) {
-  //     Get.snackbar(
-  //       'ERROR!',
-  //       'Password must be at least 8 characters',
-  //       colorText: Colors.white,
-  //       duration: Duration(seconds: 5),
-  //       backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
-  //     );
-  //   } else {
-  //     Map<String, dynamic> data = {
-  //       "fullName": fullnameController.text.trim(),
-  //       "email": emailController.text.trim(),
-  //       "password": passwordController.text.trim(),
-  //     };
+  Future<void> signupHandler() async {
+    if (!fullnameController.text.trim().isNotEmpty ||
+        !emailController.text.trim().isNotEmpty ||
+        !passwordController.text.trim().isNotEmpty ||
+        !confirmPasswordController.text.trim().isNotEmpty) {
+      Get.snackbar(
+        'ERROR!',
+        'Please ensure your fill in all fields in the form as the are required.',
+        colorText: Colors.white,
+        duration: Duration(seconds: 5),
+        backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
+      );
+    } else if (!emailPattern.hasMatch(emailController.text.trim())) {
+      Get.snackbar(
+        'ERROR!',
+        'Invalid email address',
+        colorText: Colors.white,
+        duration: Duration(seconds: 5),
+        backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
+      );
+    } else if (confirmPasswordController.text.trim() !=
+        passwordController.text.trim()) {
+      Get.snackbar(
+        'ERROR!',
+        'Passwords do not match',
+        colorText: Colors.white,
+        duration: Duration(seconds: 5),
+        backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
+      );
+    } else if (!passwordPattern.hasMatch(passwordController.text.trim())) {
+      Get.snackbar(
+        'ERROR!',
+        'Password must include a number, uppercase and lowercase alphabet',
+        colorText: Colors.white,
+        duration: Duration(seconds: 5),
+        backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
+      );
+    } else if (passwordController.text.trim().length <= 7) {
+      Get.snackbar(
+        'ERROR!',
+        'Password must be at least 8 characters',
+        colorText: Colors.white,
+        duration: Duration(seconds: 5),
+        backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
+      );
+    } else {
+      AuuthController.authInstance.registration(emailController.text, passwordController.text, fullnameController.text);
 
-  //     debugPrint('[SIGNUP DTO] :: $data');
-  //     // userRepository.signupFormData.value = SignupFormDataModel.fromJson(data);
-
-  //     // Get.to(() => SignupStepTwoScreen());
-
-  //}
-  //}
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       background: Colors.white.withOpacity(0.4),
                       hintColor: AppStyles.bgBlack,
                       fontSize: constructFontSize(context, 14),
+                      textColor: AppStyles.bgBlack,
                     ),
                     SizedBox(height: 3.0.hp),
                     CustomFormTextField(
@@ -131,6 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       background: Colors.white.withOpacity(0.4),
                       fontSize: constructFontSize(context, 14),
                       hintColor: AppStyles.bgBlack,
+                      textColor: AppStyles.bgBlack,
                     ),
                     SizedBox(height: 3.0.hp),
                     CustomFormPasswordField(
@@ -164,8 +158,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       // width: 25.0.hp,
                       height: 6.0.hp,
                       onTapHandler: () {
-                        //signupHandler();
-                        Get.to(VerificationScreen());
+                        signupHandler();
+                        //Get.to(VerificationScreen());
                       },
                       fontSize: constructFontSize(context, 18),
                       // fontSize: 12.0.sp,
@@ -199,25 +193,26 @@ class _SignupScreenState extends State<SignupScreen> {
                         GestureDetector(
                           onTap: () {
                             // OAUTH-GOOGLE: SIGNUP
-                            debugPrint('[GOOGLE-SIGNIN]');
-                            _googleSignIn.signOut();
-                            _googleSignIn.signIn().then((value) {
-                              String email = value!.email;
-                              String fullName = '${value.displayName}';
-                              String profilePicture = '${value.photoUrl}';
+                            // debugPrint('[GOOGLE-SIGNIN]');
+                            // _googleSignIn.signOut();
+                            // _googleSignIn.signIn().then((value) {
+                            //   String email = value!.email;
+                            //   String fullName = '${value.displayName}';
+                            //   String profilePicture = '${value.photoUrl}';
 
-                              debugPrint('[EMAIL] :: ${email}');
-                              debugPrint('[USERNAME] :: ${fullName}');
-                              debugPrint(
-                                  '[PROFILE-PICTURE] :: ${profilePicture}');
-                              setState(() {
-                                dto['email'] = email;
-                                dto['password'] = email;
-                                dto['fullName'] = fullName;
-                              });
+                            //   debugPrint('[EMAIL] :: ${email}');
+                            //   debugPrint('[USERNAME] :: ${fullName}');
+                            //   debugPrint(
+                            //       '[PROFILE-PICTURE] :: ${profilePicture}');
+                            //   setState(() {
+                            //     dto['email'] = email;
+                            //     dto['password'] = email;
+                            //     dto['fullName'] = fullName;
+                            //   });
 
                               //  authServices.googleSigninController(dto);
-                            });
+                           // });
+                           AuuthController.authInstance.googleSignInAccount();
                           },
                           child: Container(
                             width: 20.0.wp,

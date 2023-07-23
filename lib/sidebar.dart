@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:geo_tek/auth_controller.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/screens/auth/authentication_screen.dart';
 import 'package:geo_tek/screens/sub_screen/about_us_screen.dart';
@@ -127,8 +128,8 @@ class _SideBarState extends State<SideBar> {
             ),
             onTap: () async {
               debugPrint('[LOG OUT]');
-
-              Get.to(() => AuthenticationScreen());
+              AuuthController.authInstance.signOut();
+             // Get.to(() => AuthenticationScreen());
               // await authServices.signoutController();
             },
           ),

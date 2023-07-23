@@ -1,0 +1,111 @@
+import 'package:flutter/material.dart';
+import 'package:geo_tek/config/app_config.dart';
+import 'package:geo_tek/screens/auth/signUp_screen.dart';
+import 'package:geo_tek/screens/introduction_screen/splaash_screen.dart';
+import 'package:geo_tek/screens/sub_screen/home_page.dart';
+import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class AuuthController extends GetxController{
+  static AuuthController authInstance = Get.find();
+  late Rx<User?> user;
+  late Rx<GoogleSignInAccount?> googleSignInAccount;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  GoogleSignIn googleSign = GoogleSignIn();
+
+@override
+  void onReady() {
+    super.onReady();
+    user = Rx<User?>(auth.currentUser);
+    googleSignInAccount = Rx<GoogleSignInAccount?>(googleSign.currentUser);
+    user.bindStream(auth.userChanges());
+    ever(user, initialScreenSetting);
+
+    googleSignInAccount.bindStream(googleSign.onCurrentUserChanged);
+    ever(googleSignInAccount, _setInitialScreenGoogle);
+  }
+
+  
+  initialScreenSetting(User? user){
+    if(user == null){
+      print('Login');
+      Get.offAll(()=>const SplashScreen());
+    }
+    else{
+      Get.offAll(()=>const HomeScreen());
+    }
+
+  }
+
+  void registration(String email,password,name)async{
+
+    try{
+      await auth.createUserWithEmailAndPassword(email: email, password: password);
+    }catch(e){
+        Get.snackbar('about user', "message for user",
+          snackPosition: SnackPosition.BOTTOM,
+          titleText: const Text('Account creation faild'),
+          messageText: Text(e.toString()),
+          backgroundColor: AppStyles.bgBlue
+        );
+    }
+    
+  }
+
+  void login(String email, password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (e) {
+      Get.snackbar('Login Details', "message for user",
+          snackPosition: SnackPosition.BOTTOM,
+          titleText: const Text('SignIn faild'),
+          messageText: Text(e.toString()),
+          backgroundColor: AppStyles.bgBlue
+        );
+    }
+  }
+
+  void signOut() async {
+    await auth.signOut();
+  }
+
+  _setInitialScreenGoogle(GoogleSignInAccount? googleSignInAccount) {
+    print(googleSignInAccount);
+    if (googleSignInAccount == null) {
+      // if the user is not found then the user is navigated to the Register Screen
+      Get.offAll(() => const SignupScreen());
+    } else {
+      // if the user exists and logged in the the user is navigated to the Home Screen
+      Get.offAll(() => const HomeScreen());
+    }
+  }
+
+
+   void signInWithGoogle() async {
+    try {
+      GoogleSignInAccount? googleSignInAccount = await googleSign.signIn();
+
+      if (googleSignInAccount != null) {
+        GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        await auth
+            .signInWithCredential(credential)
+            .catchError((onErr) => print(onErr));
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      print(e.toString());
+    }
+  }
+}

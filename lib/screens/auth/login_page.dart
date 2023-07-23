@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geo_tek/screens/sub_screen/home_page.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:geo_tek/widgets/text/cutom_formtext_field.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../auth_controller.dart';
 import '../../widgets/text/custom_formpassword_field.dart';
 import 'forgot_password.dart';
 
@@ -28,26 +30,22 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   // Google Signin
-  Map dto = {};
   var googleSignin = false.obs;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> signinHandler() async {
-    Get.off(() => HomeScreen());
+    //Get.off(() => HomeScreen());
     if (!emailController.text.trim().isNotEmpty ||
         !passwordController.text.trim().isNotEmpty) {
-      // Get.snackbar(
-      //   'ERROR!',
-      //   'Please ensure your fill in all fields in the form as the are required.',
-      //   colorText: Colors.white,
-      //   duration: Duration(seconds: 5),
-      //   backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
-      // );
+      Get.snackbar(
+        'ERROR!',
+        'Please ensure your fill in all fields in the form as the are required.',
+        colorText: Colors.white,
+        duration: Duration(seconds: 5),
+        backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
+      );
     } else {
-      Map data = {
-        "email": emailController.text.trim(),
-        "password": passwordController.text.trim(),
-      };
+      AuuthController.authInstance.login(emailController.text, passwordController.text);
       // if (authServices.authRequestError.value == 'Incorrect password') {
       //   Get.snackbar(
       //     'ERROR!',
@@ -216,25 +214,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // OAUTH-GOOGLE: LOGIN
-                        debugPrint('[GOOGLE-SIGNIN]');
-                        _googleSignIn.signOut();
-                        _googleSignIn.signIn().then((value) {
-                          String email = value!.email;
-                          String fullName = '${value.displayName}';
-                          String profilePicture = '${value.photoUrl}';
-
-                          debugPrint('[EMAIL] :: ${email}');
-                          debugPrint('[USERNAME] :: ${fullName}');
-                          debugPrint('[PROFILE-PICTURE] :: ${profilePicture}');
-                          setState(() {
-                            dto['email'] = email;
-                            dto['password'] = email;
-                            dto['fullName'] = fullName;
-                          });
-
-                          // authServices.googleSigninController(dto);
-                        });
+                        if (kDebugMode) {
+                          print('click');
+                        }
+                        // // OAUTH-GOOGLE: LOGIN
+                        AuuthController.authInstance.signInWithGoogle();
                       },
                       child: Container(
                         width: 20.0.wp,

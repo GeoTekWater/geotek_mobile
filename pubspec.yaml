@@ -41,12 +41,14 @@ dependencies:
     flutter_launcher_icons: ^0.11.0
     google_sign_in: ^6.1.4
     flutter_svg: ^1.1.6
-    location: ^5.0.0
+    # location: ^4.4.0 
     custom_info_window: ^1.0.1
     permission_handler: ^10.4.3
     http: ^1.1.0
     json_annotation: ^4.8.1
     webview_flutter: ^4.2.2
+    firebase_auth: ^4.7.1
+    firebase_core: ^2.15.0
 
 dev_dependencies:
     flutter_test:

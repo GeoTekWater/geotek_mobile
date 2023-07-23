@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "252238094087",
+    "project_id": "geotek-mobile",
+    "storage_bucket": "geotek-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252238094087:android:813c9fc4f1953aae516fa2",
+        "android_client_info": {
+          "package_name": "com.example.geo_tek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252238094087-4n2ussqjr3j67dgc35kmqh4uplf1t6uc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh5F3_4TeHZKp91r6CamC8MvtzU3zZl-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252238094087-4n2ussqjr3j67dgc35kmqh4uplf1t6uc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
