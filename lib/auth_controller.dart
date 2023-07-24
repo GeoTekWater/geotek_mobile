@@ -10,7 +10,7 @@ import 'package:otp/otp.dart';
 
 
 class AuuthController extends GetxController{
-  static AuuthController authInstance = Get.find();
+  static AuuthController  authInstance = Get.find();
   late Rx<User?> user;
   late Rx<GoogleSignInAccount?> googleSignInAccount;
   FirebaseAuth auth = FirebaseAuth.instance;

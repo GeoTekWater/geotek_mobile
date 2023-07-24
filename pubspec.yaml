@@ -50,6 +50,9 @@ dependencies:
     firebase_auth: ^4.7.1
     firebase_core: ^2.15.0
     otp: ^3.1.4
+    flutter_html: 
+    foundation_flutter: ^0.2.0
+    desktop_webview_window: ^0.2.0
 
 dev_dependencies:
     flutter_test:

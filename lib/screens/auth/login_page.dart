@@ -45,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
       );
     } else {
-      AuuthController.authInstance.login(emailController.text, passwordController.text);
+      AuuthController.authInstance
+          .login(emailController.text, passwordController.text);
       // if (authServices.authRequestError.value == 'Incorrect password') {
       //   Get.snackbar(
       //     'ERROR!',
@@ -181,8 +182,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 6.0.hp,
                   onTapHandler: () {
                     //signinHandler();
-                  AuuthController.authInstance.sendOTPToEmail(emailController.text);
-
+                    AuuthController.authInstance.login(
+                        emailController.text.trim(),
+                        passwordController.text.trim());
+                        
+                    // AuuthController.authInstance
+                    //     .sendOTPToEmail(emailController.text);
                   },
                   fontSize: constructFontSize(context, 18),
                   // fontSize: 12.0.sp,
@@ -216,9 +221,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        if (kDebugMode) {
-                          print('click');
-                        }
+                        // if (kDebugMode) {
+                        //   print('click');
+                        // }
                         // // OAUTH-GOOGLE: LOGIN
                         AuuthController.authInstance.signInWithGoogle();
                       },
