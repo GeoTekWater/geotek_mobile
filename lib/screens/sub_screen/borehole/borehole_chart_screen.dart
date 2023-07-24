@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/sidebar.dart';
@@ -18,32 +19,22 @@ class BoreHoleChartScreen extends StatefulWidget {
 }
 
 class _BoreHoleChartScreenState extends State<BoreHoleChartScreen> {
-  Timer? chartInterval;
   int currentFetch = 0;
-  bool? _webviewAvailable;
   var loadingPercentage = 0;
   late final WebViewController controller;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Future<void> _handleRefresh() async {
-    chartInterval = Timer.periodic(const Duration(seconds: 5), (timer) {
-      // setState(() {
-      //   currentFetch += 1;
-      // });
-      // debugPrint('[EXECUTING-INTERVAL] :: $currentFetch');
-
-      // controller.reload();
-    });
+  void initializeScreenOrientation() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   @override
   void initState() {
     super.initState();
-    WebviewWindow.isWebviewAvailable().then((value) {
-      setState(() {
-        _webviewAvailable = value;
-      });
-    });
+    initializeScreenOrientation();
 
     controller = WebViewController()
       ..setNavigationDelegate(NavigationDelegate(
@@ -79,8 +70,6 @@ class _BoreHoleChartScreenState extends State<BoreHoleChartScreen> {
       // ..runJavaScript(
       //     "document.querySelector('meta[name=\"viewport\"]').setAttribute('content', 'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));")
       ..setJavaScriptMode(JavaScriptMode.unrestricted);
-
-    _handleRefresh();
   }
 
   @override
@@ -88,7 +77,7 @@ class _BoreHoleChartScreenState extends State<BoreHoleChartScreen> {
     // TODO: implement dispose
     super.dispose();
 
-    chartInterval!.cancel();
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
   }
 
   @override

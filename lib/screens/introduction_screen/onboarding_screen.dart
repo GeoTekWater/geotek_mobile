@@ -6,7 +6,6 @@ import 'package:geo_tek/screens/auth/authentication_screen.dart';
 import 'package:get/get.dart';
 import '../../../widgets/buttons/custom_button.dart';
 import '../../../widgets/text/custom_text_widget.dart';
-import '../auth/login_page.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
