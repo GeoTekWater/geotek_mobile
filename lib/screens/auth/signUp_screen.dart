@@ -192,26 +192,6 @@ class _SignupScreenState extends State<SignupScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            // OAUTH-GOOGLE: SIGNUP
-                            // debugPrint('[GOOGLE-SIGNIN]');
-                            // _googleSignIn.signOut();
-                            // _googleSignIn.signIn().then((value) {
-                            //   String email = value!.email;
-                            //   String fullName = '${value.displayName}';
-                            //   String profilePicture = '${value.photoUrl}';
-
-                            //   debugPrint('[EMAIL] :: ${email}');
-                            //   debugPrint('[USERNAME] :: ${fullName}');
-                            //   debugPrint(
-                            //       '[PROFILE-PICTURE] :: ${profilePicture}');
-                            //   setState(() {
-                            //     dto['email'] = email;
-                            //     dto['password'] = email;
-                            //     dto['fullName'] = fullName;
-                            //   });
-
-                              //  authServices.googleSigninController(dto);
-                           // });
                            AuuthController.authInstance.googleSignInAccount();
                           },
                           child: Container(
