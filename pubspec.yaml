@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-    # sdk: '>=3.0.5 <4.0.0'
+    # sdk: '>=3.0.2 <4.0.0'
     sdk: '>=2.18.6 <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
@@ -52,7 +52,7 @@ dependencies:
     otp: ^3.1.4
     flutter_html: 
     foundation_flutter: ^0.2.0
-    desktop_webview_window: ^0.2.0
+    # desktop_webview_window: ^0.2.0
 
 dev_dependencies:
     flutter_test:

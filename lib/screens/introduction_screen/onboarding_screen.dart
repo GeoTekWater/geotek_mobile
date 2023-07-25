@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/screens/auth/authentication_screen.dart';
+import 'package:geo_tek/screens/auth/login_page.dart';
 import 'package:get/get.dart';
 import '../../../widgets/buttons/custom_button.dart';
 import '../../../widgets/text/custom_text_widget.dart';
@@ -74,7 +75,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   Get.off(
                     transition: Transition.fade,
                     duration: const Duration(milliseconds: 2000),
-                    () => const AuthenticationScreen(),
+                    () => const LoginScreen(),
                   );
                 },
                 // fontSize: 12.0.sp,

@@ -45,19 +45,22 @@ class _HomeScreenState extends State<HomeScreen>
       //   backgroundColor: AppStyles.bgWhite,
       //   elevation: 0,
       // ),
-      body: Stack(
-        children: [
-          Container(
-            color: AppStyles.bgWhite,
-            child: MainMap(),
-          ),
-          Positioned(
-            top: 4.0.hp,
-            left: 2.0.wp,
-            width: screenWidth,
-            child: PageHeader(scaffoldKey: scaffoldKey),
-          ),
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              color: AppStyles.bgWhite,
+              child: MainMap(),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.02,
+              // top: 4.0.hp,
+              left: 2.0.wp,
+              width: screenWidth,
+              child: PageHeader(scaffoldKey: scaffoldKey),
+            ),
+          ],
+        ),
       ),
     );
   }
