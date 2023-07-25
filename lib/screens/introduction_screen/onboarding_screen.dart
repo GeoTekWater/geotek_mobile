@@ -55,6 +55,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     text:
                         'At Geotek, our mission is to develop practical and cutting-edge solutions to the issue of water shortage and to offer knowledge that will support groundwater management in sub-Saharan Africa. Water scarcity is a combined concern.',
                     // size: 13.0.sp,
+                    alignment: TextAlign.center,
                     size: constructFontSize(context, 20),
                     color: Colors.white,
                     // weight: FontWeight.bold,

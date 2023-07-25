@@ -181,13 +181,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   // width: 20.0.hp,
                   height: 6.0.hp,
                   onTapHandler: () {
-                    //signinHandler();
-                    AuuthController.authInstance.login(
-                        emailController.text.trim(),
-                        passwordController.text.trim());
-                        
+                    //signinHandler();                        
                     // AuuthController.authInstance
                     //     .sendOTPToEmail(emailController.text);
+                    AuuthController.authInstance.login(emailController.text.trim(), passwordController.text.trim());
+                    //sendOTPToEmail(emailController.text);
                   },
                   fontSize: constructFontSize(context, 18),
                   // fontSize: 12.0.sp,
