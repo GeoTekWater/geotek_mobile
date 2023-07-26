@@ -157,7 +157,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   // width: 45.0.wp,
                   height: 6.0.hp,
                   onTapHandler: () {
-                    Get.to(() => PasswordResetVerificationScreen());
+                    // Get.to(() => PasswordResetVerificationScreen());
                     //forgetPassordHandler();
                   },
                   // fontSize: 12.0.sp,
