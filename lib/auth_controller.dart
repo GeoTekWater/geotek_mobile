@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/screens/auth/authentication_screen.dart';
+import 'package:geo_tek/screens/auth/login_page.dart';
 import 'package:geo_tek/screens/auth/signUp_screen.dart';
 import 'package:geo_tek/screens/introduction_screen/splaash_screen.dart';
 import 'package:geo_tek/screens/sub_screen/home_page.dart';
+import 'package:geo_tek/widgets/text/custom_text_widget.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -83,6 +85,46 @@ class AuuthController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         titleText: const Text('Message'),
         messageText: Text("An error occured during login."),
+        // messageText: Text(e.toString()),
+        backgroundColor: AppStyles.bgBrightRed,
+      );
+    }
+  }
+
+  void forgotPassword(String email) async {
+    try {
+      authRequestInProgress.value = true;
+
+      await auth.sendPasswordResetEmail(email: email);
+
+      authRequestInProgress.value = false;
+
+      Get.to(() => LoginScreen());
+
+      Get.snackbar(
+        'Login Details',
+        "message for user",
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: CustomTextWidget(
+          text: 'Message',
+          color: AppStyles.bgWhite,
+        ),
+        messageText: CustomTextWidget(
+          text: "Success, please check your email to proceed.",
+          color: AppStyles.bgWhite,
+        ),
+        // messageText: Text(e.toString()),
+        backgroundColor: Colors.green.shade800.withOpacity(0.8),
+      );
+    } catch (e) {
+      authRequestInProgress.value = false;
+
+      Get.snackbar(
+        'Login Details',
+        "message for user",
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: const Text('Message'),
+        messageText: Text("An error occured during forgot password."),
         // messageText: Text(e.toString()),
         backgroundColor: AppStyles.bgBrightRed,
       );

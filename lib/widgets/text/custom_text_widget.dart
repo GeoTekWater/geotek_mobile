@@ -35,7 +35,7 @@ class CustomTextWidget extends StatelessWidget {
         fontStyle: fontStyle ?? FontStyle.normal,
         color: color,
         height: lineHeight ?? 0,
-        fontSize: size ?? 16.0.sp,
+        fontSize: size ?? constructFontSize(context, 16),
         fontWeight: weight ?? FontWeight.normal,
       ),
     );
