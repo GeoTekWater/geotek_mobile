@@ -74,6 +74,9 @@ class _MainMapState extends State<MainMap> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.3,
                   // height: 25.0.hp,
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.02),
+                  // padding: EdgeInsets.only(bottom: 2.0.hp),
                   decoration: BoxDecoration(
                     color: AppStyles.bgWhite,
                     borderRadius: BorderRadius.circular(10),
@@ -103,14 +106,18 @@ class _MainMapState extends State<MainMap> {
                         // height: 15.0.hp,
                         height: MediaQuery.of(context).size.height * 0.12,
                         padding: EdgeInsets.only(
-                          top: 1.0.hp,
-                          left: 2.0.wp,
-                          right: 2.0.wp,
+                          top: MediaQuery.of(context).size.height * 0.03,
+                          // bottom: 2.0.hp,
+                          left: MediaQuery.of(context).size.width * 0.02,
+                          right: MediaQuery.of(context).size.width * 0.02,
                         ),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
+                              // mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomTextWidget(
                                   maxLines: 1,
@@ -211,7 +218,7 @@ class _MainMapState extends State<MainMap> {
           CustomInfoWindow(
             controller: customInfoWindowcontroller,
             // height: 28.0.hp,
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: MediaQuery.of(context).size.height * 0.32,
             width: 300,
             offset: 35,
           ),

@@ -335,11 +335,23 @@ class _SignupScreenState extends State<SignupScreen> {
                               () => LoginScreen(),
                             );
                           },
-                          child: CustomTextWidget(
-                            text: 'Login',
-                            size: constructFontSize(context, 16),
-                            // size: 12.0.sp,
-                            color: AppStyles.bgBlue,
+                          //ttyyyyuuutr
+                          child: Container(
+                            width: 20.0.wp,
+                            height: 6.0.hp,
+                            decoration: BoxDecoration(
+                                color: AppStyles.bgWhite.withOpacity(0.8),
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppStyles.bgBlue,
+                                    blurRadius: 3,
+                                  )
+                                ]),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                  'assets/icons/icon__facebook.svg'),
+                            ),
                           ),
                         ),
                       ],

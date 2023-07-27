@@ -3,7 +3,8 @@ class BoreHoleModel {
   String? boreholeID;
   double? latitude;
   double? longitude;
-  // String? icon;
+  String? waterQuality;
+  String? pumpFunctionality;
   String? image;
   String? address;
 
@@ -12,7 +13,8 @@ class BoreHoleModel {
       this.boreholeID,
       this.latitude,
       this.longitude,
-      // this.icon,
+      this.waterQuality,
+      this.pumpFunctionality,
       this.image,
       this.address});
 
@@ -21,7 +23,8 @@ class BoreHoleModel {
     boreholeID = json['borehole-ID'];
     latitude = json['latitude'];
     longitude = json['longitude'];
-    // icon = json['icon'];
+    waterQuality = json['waterQuality'];
+    pumpFunctionality = json['pumpFunctionality'];
     image = json['image'];
     address = json['address'];
   }
@@ -32,7 +35,8 @@ class BoreHoleModel {
     data['borehole-ID'] = this.boreholeID;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
-    // data['icon'] = this.icon;
+    data['waterQuality'] = this.waterQuality;
+    data['pumpFunctionality'] = this.pumpFunctionality;
     data['image'] = this.image;
     data['address'] = this.address;
     return data;

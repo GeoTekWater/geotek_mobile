@@ -176,9 +176,15 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                       size: constructFontSize(context, 18),
                     ),
                     CustomTextWidget(
-                      text: 'Good',
+                      text: '${widget.boreHole.waterQuality}',
                       weight: FontWeight.w600,
-                      color: AppStyles.bgBlue,
+                      color: widget.boreHole.name == "1"
+                          ? Colors.greenAccent.shade700
+                          : widget.boreHole.name == "2"
+                              ? Colors.orange
+                              : widget.boreHole.name == "3"
+                                  ? Colors.blueAccent.shade700
+                                  : Colors.redAccent.shade700,
                       size: constructFontSize(context, 18),
                     ),
                   ],
@@ -202,9 +208,15 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                       size: constructFontSize(context, 18),
                     ),
                     CustomTextWidget(
-                      text: 'Good',
+                      text: '${widget.boreHole.pumpFunctionality}',
                       weight: FontWeight.w600,
-                      color: AppStyles.bgBlue,
+                      color: widget.boreHole.name == "1"
+                          ? Colors.greenAccent.shade700
+                          : widget.boreHole.name == "2"
+                              ? Colors.orange
+                              : widget.boreHole.name == "3"
+                                  ? Colors.blueAccent.shade700
+                                  : Colors.redAccent.shade700,
                       size: constructFontSize(context, 18),
                     ),
                   ],

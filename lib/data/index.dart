@@ -7,6 +7,8 @@ List<Map<String, dynamic>> boreholes = [
     "latitude": 9.916587499999999,
     "longitude": 8.8547031,
     "image": "assets/images/borehole__1.jpg",
+    "waterQuality": "Excellent",
+    "pumpFunctionality": "Excellent",
     "address": " Tudun Wada, Jos Plateau State",
   },
   {
@@ -15,6 +17,8 @@ List<Map<String, dynamic>> boreholes = [
     "latitude": 9.956587499999999,
     "longitude": 8.9247031,
     "image": "assets/images/borehole__2.jpg",
+    "waterQuality": "Fair",
+    "pumpFunctionality": "Fair",
     "address": " Mazah Road, Naraguta B, Jos Plateau State",
   },
   {
@@ -23,6 +27,8 @@ List<Map<String, dynamic>> boreholes = [
     "longitude": 8.9647031,
     "latitude": 9.906487499999999,
     "image": "assets/images/borehole__3.jpg",
+    "waterQuality": "Good",
+    "pumpFunctionality": "Good",
     "address": " Dogon Karfi, Jos Plateau State",
   },
   {
@@ -31,6 +37,8 @@ List<Map<String, dynamic>> boreholes = [
     "longitude": 9.0447031,
     "latitude": 9.896587499999999,
     "image": "assets/images/borehole__4.jpg",
+    "waterQuality": "Poor",
+    "pumpFunctionality": "Poor",
     "address": " Beside Runil Oil Nigeria Ring Road, Jos Plateau State",
   },
   {
@@ -39,6 +47,8 @@ List<Map<String, dynamic>> boreholes = [
     "longitude": 8.9147031,
     "latitude": 9.886587499999999,
     "image": "assets/images/borehole__5.jpg",
+    "waterQuality": "Poor",
+    "pumpFunctionality": "Poor",
     "address":
         " Beside Rabtech Computer Consultancy, Bukuru Jos, Plateau State",
   },
