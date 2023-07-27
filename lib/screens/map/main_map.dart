@@ -43,13 +43,29 @@ class _MainMapState extends State<MainMap> {
   Future<void> onMapCreated() async {
     final Uint8List markerIcon = await getBytesFromAsset(
         path: 'assets/icons/icon__marker.png', width: 40);
+    final Uint8List markerIconRed = await getBytesFromAsset(
+        path: 'assets/icons/icon__marker__red.png', width: 40);
+    final Uint8List markerIconOrange = await getBytesFromAsset(
+        path: 'assets/icons/icon__marker__orange.png', width: 40);
+    final Uint8List markerIconBlue = await getBytesFromAsset(
+        path: 'assets/icons/icon__marker__blue.png', width: 40);
+    final Uint8List markerIconGreen = await getBytesFromAsset(
+        path: 'assets/icons/icon__marker__green.png', width: 40);
 
     setState(() {
       markers.clear();
+
       for (final BoreHoleModel boreHole in appBoreholes) {
         markers.add(
           Marker(
-            icon: BitmapDescriptor.fromBytes(markerIcon),
+            icon: BitmapDescriptor.fromBytes(boreHole.name == "1"
+                ? markerIconGreen
+                : boreHole.name == "2"
+                    ? markerIconOrange
+                    : boreHole.name == "3"
+                        ? markerIconBlue
+                        : markerIconRed),
+            // icon: BitmapDescriptor.fromBytes(markerIcon),
             markerId: MarkerId('${boreHole.name}'),
             position: LatLng(
                 boreHole.latitude!.toDouble(), boreHole.longitude!.toDouble()),

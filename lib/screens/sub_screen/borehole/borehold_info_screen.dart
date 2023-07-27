@@ -56,11 +56,13 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                 width: screenWidth * 0.3,
                 child: SvgPicture.asset('assets/images/logo.svg'),
               ),
+              SizedBox(height: 2.0.hp),
               CustomTextWidget(
                 weight: FontWeight.w600,
                 text: '${widget.boreHole.boreholeID}',
                 size: constructFontSize(context, 20),
               ),
+              SizedBox(height: 4.0.hp),
               Container(
                 height: screenHeight * 0.25,
                 width: double.maxFinite,

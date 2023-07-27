@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Stack(
                   children: [
                     CircleAvatar(
-                      radius: 70,
+                      radius: 80,
                       child: Image.asset(
                         "assets/images/Ellipse 4.png",
                         scale: 0.5,

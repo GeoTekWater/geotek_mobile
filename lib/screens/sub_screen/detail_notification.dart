@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/sidebar.dart';
 import 'package:geo_tek/widgets/buttons/custom_button.dart';
 import 'package:geo_tek/widgets/navigation/pageheader.dart';
 import 'package:geo_tek/widgets/text/custom_text_widget.dart';
+import 'package:geo_tek/screens/sub_screen/borehole_notification_maintenance_history_screen.dart';
 
 class NotificationDetailScreen extends StatefulWidget {
   final Map notification;
@@ -95,10 +97,11 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
               // width: 20.0.hp,
               height: 6.0.hp,
               onTapHandler: () {
-                // Get.to(
-                //   () => BoreHoleMaintenanceHistoryScreen(
-                //       boreHole: widget.boreHole),
-                // );
+                Get.to(
+                  () => BoreHoleNotificationMaintenanceHistoryScreen(
+                    boreHole: widget.notification,
+                  ),
+                );
               },
               fontSize: constructFontSize(context, 16),
               // fontSize: 12.0.sp,
