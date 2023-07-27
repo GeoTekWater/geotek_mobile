@@ -210,6 +210,7 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                   ],
                 ),
               ),
+              SizedBox(height: 2.0.hp),
             ],
           ),
         ),
