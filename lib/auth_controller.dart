@@ -1,22 +1,28 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:geo_tek/config/app_config.dart';
+import 'package:geo_tek/screens/auth/authentication_screen.dart';
+import 'package:geo_tek/screens/auth/login_page.dart';
 import 'package:geo_tek/screens/auth/signUp_screen.dart';
 import 'package:geo_tek/screens/introduction_screen/splaash_screen.dart';
 import 'package:geo_tek/screens/sub_screen/home_page.dart';
+import 'package:geo_tek/widgets/text/custom_text_widget.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:otp/otp.dart';
 
-
-class AuuthController extends GetxController{
-  static AuuthController  authInstance = Get.find();
+class AuuthController extends GetxController {
+  static AuuthController authInstance = Get.find();
   late Rx<User?> user;
   late Rx<GoogleSignInAccount?> googleSignInAccount;
   FirebaseAuth auth = FirebaseAuth.instance;
   GoogleSignIn googleSign = GoogleSignIn();
 
-@override
+  var authRequestInProgress = false.obs;
+
+  @override
   void onReady() {
     super.onReady();
     user = Rx<User?>(auth.currentUser);
@@ -28,43 +34,100 @@ class AuuthController extends GetxController{
     ever(googleSignInAccount, _setInitialScreenGoogle);
   }
 
-  
-  initialScreenSetting(User? user){
-    if(user == null){
+  initialScreenSetting(User? user) {
+    if (user == null) {
       print('Login');
-      Get.offAll(()=>const SplashScreen());
+      Get.offAll(() => const SplashScreen());
+    } else {
+      Get.offAll(() => const HomeScreen());
     }
-    else{
-      Get.offAll(()=>const HomeScreen());
-    }
-
   }
 
-  void registration(String email,password,name)async{
+  void registration(String email, password, name) async {
+    try {
+      authRequestInProgress.value = true;
 
-    try{
-      await auth.createUserWithEmailAndPassword(email: email, password: password);
-    }catch(e){
-        Get.snackbar('about user', "message for user",
-          snackPosition: SnackPosition.BOTTOM,
-          titleText: const Text('Account creation faild'),
-          messageText: Text(e.toString()),
-          backgroundColor: AppStyles.bgBlue
-        );
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+
+      authRequestInProgress.value = false;
+    } catch (e) {
+      authRequestInProgress.value = false;
+
+      Get.snackbar(
+        'about user',
+        "message for user",
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: const Text('Message'),
+        messageText: Text("An error occured during signup."),
+        // messageText: Text(e.toString()),
+        backgroundColor: AppStyles.bgBrightRed,
+      );
     }
-    
   }
 
   void login(String email, password) async {
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      authRequestInProgress.value = true;
+
+      UserCredential user = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      debugPrint('[USER] :: ${user.toString()}');
+
+      authRequestInProgress.value = false;
     } catch (e) {
-      Get.snackbar('Login Details', "message for user",
-          snackPosition: SnackPosition.BOTTOM,
-          titleText: const Text('SignIn faild'),
-          messageText: Text(e.toString()),
-          backgroundColor: AppStyles.bgBlue
-        );
+      authRequestInProgress.value = false;
+
+      Get.snackbar(
+        'Login Details',
+        "message for user",
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: const Text('Message'),
+        messageText: Text("An error occured during login."),
+        // messageText: Text(e.toString()),
+        backgroundColor: AppStyles.bgBrightRed,
+      );
+    }
+  }
+
+  void forgotPassword(String email) async {
+    try {
+      authRequestInProgress.value = true;
+
+      await auth.sendPasswordResetEmail(email: email);
+
+      authRequestInProgress.value = false;
+
+      Get.to(() => LoginScreen());
+
+      Get.snackbar(
+        'Login Details',
+        "message for user",
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: CustomTextWidget(
+          text: 'Message',
+          color: AppStyles.bgWhite,
+        ),
+        messageText: CustomTextWidget(
+          text: "Success, please check your email to proceed.",
+          color: AppStyles.bgWhite,
+        ),
+        // messageText: Text(e.toString()),
+        backgroundColor: Colors.green.shade800.withOpacity(0.8),
+      );
+    } catch (e) {
+      authRequestInProgress.value = false;
+
+      Get.snackbar(
+        'Login Details',
+        "message for user",
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: const Text('Message'),
+        messageText: Text("An error occured during forgot password."),
+        // messageText: Text(e.toString()),
+        backgroundColor: AppStyles.bgBrightRed,
+      );
     }
   }
 
@@ -76,14 +139,14 @@ class AuuthController extends GetxController{
     print(googleSignInAccount);
     if (googleSignInAccount == null) {
       // if the user is not found then the user is navigated to the Register Screen
-      Get.offAll(() => const SignupScreen());
+      Get.offAll(() => const AuthenticationScreen());
     } else {
       // if the user exists and logged in the the user is navigated to the Home Screen
       Get.offAll(() => const HomeScreen());
     }
   }
 
-   void signInWithGoogle() async {
+  void signInWithGoogle() async {
     try {
       GoogleSignInAccount? googleSignInAccount = await googleSign.signIn();
 
@@ -110,21 +173,24 @@ class AuuthController extends GetxController{
     }
   }
 
-void sendOTPToEmail(String email) async {
+  void sendOTPToEmail(String email) async {
     try {
       // Generate the OTP
-      final String otpCode = OTP.generateTOTPCodeString('YOUR_SECRET_KEY', DateTime.now().millisecondsSinceEpoch);
+      final String otpCode = OTP.generateTOTPCodeString(
+          'YOUR_SECRET_KEY', DateTime.now().millisecondsSinceEpoch);
 
       // Send the OTP to the user's email
-      await auth.sendPasswordResetEmail(email: email, actionCodeSettings: ActionCodeSettings(
-        url: 'https://www.example.com/reset_password?otp=$otpCode',
-        handleCodeInApp: true,
-        iOSBundleId: 'com.example.app',
-        androidPackageName: 'com.example.app',
-        androidInstallApp: true,
-        androidMinimumVersion: '16',
-        dynamicLinkDomain: 'example.page.link',
-      ));
+      await auth.sendPasswordResetEmail(
+          email: email,
+          actionCodeSettings: ActionCodeSettings(
+            url: 'https://www.example.com/reset_password?otp=$otpCode',
+            handleCodeInApp: true,
+            iOSBundleId: 'com.example.app',
+            androidPackageName: 'com.example.app',
+            androidInstallApp: true,
+            androidMinimumVersion: '16',
+            dynamicLinkDomain: 'example.page.link',
+          ));
 
       Get.snackbar(
         'OTP Sent',
@@ -142,7 +208,7 @@ void sendOTPToEmail(String email) async {
 
 // void sendPasswordResetEmail(String email) async {
 //   //FirebaseAuth _auth = FirebaseAuth.instance;
-  
+
 //   try {
 //     await auth.sendPasswordResetEmail(email: email);
 //     print("Password reset email sent successfully to $email");
@@ -152,5 +218,4 @@ void sendOTPToEmail(String email) async {
 //     // Handle the error - You can show an error message to the user or log the error.
 //   }
 //}
-
 }

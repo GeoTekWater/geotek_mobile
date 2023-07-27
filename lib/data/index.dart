@@ -7,44 +7,50 @@ List<Map<String, dynamic>> boreholes = [
     "latitude": 9.916587499999999,
     "longitude": 8.8547031,
     "image": "assets/images/borehole__1.jpg",
-    "address":
-        " No. 20 Tina junction, Millionaires Quarters, Jos Plateau State",
+    "waterQuality": "Excellent",
+    "pumpFunctionality": "Excellent",
+    "address": " Tudun Wada, Jos Plateau State",
   },
   {
     "name": "2",
     "borehole-ID": "BOREHOLE TI-16",
     "latitude": 9.956587499999999,
     "longitude": 8.9247031,
-    "image": "assets/images/borehole__1.jpg",
-    "address":
-        " No. 20 Tina junction, Millionaires Quarters, Jos Plateau State",
+    "image": "assets/images/borehole__2.jpg",
+    "waterQuality": "Fair",
+    "pumpFunctionality": "Fair",
+    "address": " Mazah Road, Naraguta B, Jos Plateau State",
   },
   {
     "name": "3",
     "borehole-ID": "BOREHOLE TI-18",
     "longitude": 8.9647031,
     "latitude": 9.906487499999999,
-    "image": "assets/images/borehole__1.jpg",
-    "address":
-        " No. 20 Tina junction, Millionaires Quarters, Jos Plateau State",
+    "image": "assets/images/borehole__3.jpg",
+    "waterQuality": "Good",
+    "pumpFunctionality": "Good",
+    "address": " Dogon Karfi, Jos Plateau State",
   },
   {
     "name": "4",
     "borehole-ID": "BOREHOLE TI-20",
-    "longitude": 8.913382,
-    "latitude": 9.913696,
-    "image": "assets/images/borehole__1.jpg",
-    "address":
-        " No. 20 Tina junction, Millionaires Quarters, Jos Plateau State",
+    "longitude": 9.0447031,
+    "latitude": 9.896587499999999,
+    "image": "assets/images/borehole__4.jpg",
+    "waterQuality": "Poor",
+    "pumpFunctionality": "Poor",
+    "address": " Beside Runil Oil Nigeria Ring Road, Jos Plateau State",
   },
   {
     "name": "5",
     "borehole-ID": "BOREHOLE TI-21",
     "longitude": 8.9147031,
     "latitude": 9.886587499999999,
-    "image": "assets/images/borehole__1.jpg",
+    "image": "assets/images/borehole__5.jpg",
+    "waterQuality": "Poor",
+    "pumpFunctionality": "Poor",
     "address":
-        " No. 20 Tina junction, Millionaires Quarters, Jos Plateau State",
+        " Beside Rabtech Computer Consultancy, Bukuru Jos, Plateau State",
   },
 ];
 
@@ -53,13 +59,16 @@ List<BoreHoleModel> appBoreholes =
 
 List<Map> appNotifications = [
   {
-    "title": "Borehole TI-14 has entered two weeks of inactivity."
+    "boreHoleID": "BoreHole T1-14",
+    "title": "Borehole TI-14 has entered two weeks of inactivity.",
   },
   {
-    "title": "Borehole TI-19 has entered two weeks of inactivity."
+    "boreHoleID": "BoreHole T1-19",
+    "title": "Borehole TI-19 has entered two weeks of inactivity.",
   },
   {
-    "title": "Borehole TI-13 has entered two weeks of inactivity."
+    "boreHoleID": "BoreHole T1-13",
+    "title": "Borehole TI-13 has entered two weeks of inactivity.",
   },
 ];
 

@@ -56,11 +56,13 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                 width: screenWidth * 0.3,
                 child: SvgPicture.asset('assets/images/logo.svg'),
               ),
+              SizedBox(height: 2.0.hp),
               CustomTextWidget(
                 weight: FontWeight.w600,
                 text: '${widget.boreHole.boreholeID}',
                 size: constructFontSize(context, 20),
               ),
+              SizedBox(height: 4.0.hp),
               Container(
                 height: screenHeight * 0.25,
                 width: double.maxFinite,
@@ -174,9 +176,15 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                       size: constructFontSize(context, 18),
                     ),
                     CustomTextWidget(
-                      text: 'Good',
+                      text: '${widget.boreHole.waterQuality}',
                       weight: FontWeight.w600,
-                      color: AppStyles.bgBlue,
+                      color: widget.boreHole.name == "1"
+                          ? Colors.greenAccent.shade700
+                          : widget.boreHole.name == "2"
+                              ? Colors.orange
+                              : widget.boreHole.name == "3"
+                                  ? Colors.blueAccent.shade700
+                                  : Colors.redAccent.shade700,
                       size: constructFontSize(context, 18),
                     ),
                   ],
@@ -200,14 +208,21 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                       size: constructFontSize(context, 18),
                     ),
                     CustomTextWidget(
-                      text: 'Good',
+                      text: '${widget.boreHole.pumpFunctionality}',
                       weight: FontWeight.w600,
-                      color: AppStyles.bgBlue,
+                      color: widget.boreHole.name == "1"
+                          ? Colors.greenAccent.shade700
+                          : widget.boreHole.name == "2"
+                              ? Colors.orange
+                              : widget.boreHole.name == "3"
+                                  ? Colors.blueAccent.shade700
+                                  : Colors.redAccent.shade700,
                       size: constructFontSize(context, 18),
                     ),
                   ],
                 ),
               ),
+              SizedBox(height: 2.0.hp),
             ],
           ),
         ),

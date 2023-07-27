@@ -29,7 +29,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Size.fromHeight(MediaQuery.of(context).size.height * 0.08),
         child: Container(
           padding: EdgeInsets.only(
-            top: 4.0.hp,
+            top: MediaQuery.of(context).size.height * 0.05,
+            // top: 4.0.hp,
             left: 4.0.wp,
           ),
           child: PageHeader(scaffoldKey: scaffoldKey),
@@ -57,16 +58,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(height: 4.0.hp),
                 Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 70,
+                    ClipOval(
+                      // radius: 80,
                       child: Image.asset(
-                        "assets/images/Ellipse 4.png",
-                        scale: 0.5,
+                        "assets/images/Ellipse 5.png",
+                        scale: 1.2,
                         fit: BoxFit.cover,
                       ),
                     ),
                     Positioned(
-                      bottom: 0,
+                      bottom: 10,
                       right: 0,
                       child: CircleAvatar(
                         radius: 15,
@@ -85,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 SizedBox(height: 5.0.hp),
                 Container(
-                  height: 8.0.hp,
+                  height: screenHeight * 0.08,
                   width: double.maxFinite,
                   padding: EdgeInsets.symmetric(
                     vertical: 1.0.hp,
@@ -105,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: AppStyles.bgBlack,
                       ),
                       CustomTextWidget(
-                        text: 'Emeka Ifele',
+                        text: 'HydroLife Project',
                         size: constructFontSize(context, 14),
                         color: AppStyles.bgBlack,
                       ),
@@ -114,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 SizedBox(height: 2.0.hp),
                 Container(
-                  height: 8.0.hp,
+                  height: screenHeight * 0.08,
                   width: double.maxFinite,
                   padding: EdgeInsets.symmetric(
                     vertical: 1.0.hp,
@@ -134,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: AppStyles.bgBlack,
                       ),
                       CustomTextWidget(
-                        text: '+23408138303723',
+                        text: '+2348038388001',
                         size: constructFontSize(context, 14),
                         color: AppStyles.bgBlack,
                       ),
@@ -143,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 SizedBox(height: 2.0.hp),
                 Container(
-                  height: 8.0.hp,
+                  height: screenHeight * 0.08,
                   width: double.maxFinite,
                   padding: EdgeInsets.symmetric(
                     vertical: 1.0.hp,
@@ -163,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: AppStyles.bgBlack,
                       ),
                       CustomTextWidget(
-                        text: 'EmekaIfele@gmail.com',
+                        text: 'info@hydrolifeproject.com',
                         size: constructFontSize(context, 14),
                         color: AppStyles.bgBlack,
                       ),
@@ -176,8 +177,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 8.0.hp,
-                      width: 20.0.wp,
+                      height: screenHeight * 0.08,
+                      width: screenWidth * 0.25,
                       padding: EdgeInsets.symmetric(
                         vertical: 1.0.hp,
                         horizontal: 4.0.wp,
@@ -204,8 +205,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Container(
-                      height: 8.0.hp,
-                      width: 20.0.wp,
+                      height: screenHeight * 0.08,
+                      width: screenWidth * 0.25,
                       padding: EdgeInsets.symmetric(
                         vertical: 1.0.hp,
                         horizontal: 4.0.wp,
@@ -232,8 +233,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Container(
-                      height: 8.0.hp,
-                      width: 20.0.wp,
+                      height: screenHeight * 0.08,
+                      width: screenWidth * 0.25,
                       padding: EdgeInsets.symmetric(
                         vertical: 1.0.hp,
                         horizontal: 4.0.wp,
@@ -263,7 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 SizedBox(height: 2.0.hp),
                 Container(
-                  height: 13.0.hp,
+                  height: screenHeight * 0.12,
                   width: double.maxFinite,
                   padding: EdgeInsets.symmetric(
                     vertical: 2.0.hp,

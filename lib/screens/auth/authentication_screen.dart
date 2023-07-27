@@ -102,6 +102,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                   height: screenHeight * 0.65,
                   padding: EdgeInsets.only(top: 3.0.hp),
                   child: TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
                     controller: tabController,
                     children: [
                       LoginScreen(),

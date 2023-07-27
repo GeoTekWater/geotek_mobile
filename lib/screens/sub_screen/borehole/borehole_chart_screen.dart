@@ -1,6 +1,4 @@
-import 'dart:async';
-import 'dart:io';
-
+// ignore_for_file: prefer_const_constructors
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:geo_tek/config/app_config.dart';
@@ -26,8 +24,8 @@ class _BoreHoleChartScreenState extends State<BoreHoleChartScreen> {
 
   void initializeScreenOrientation() async {
     await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
     ]);
   }
 
@@ -105,68 +103,6 @@ class _BoreHoleChartScreenState extends State<BoreHoleChartScreen> {
           ],
         ),
       ),
-      // body: Center(
-      //   child: CustomButton(
-      //     text: 'Login',
-      //     width: double.maxFinite,
-      //     // width: 20.0.hp,
-      //     height: 6.0.hp,
-      //     onTapHandler: () async {
-      //       if (_webviewAvailable != true) {
-      //         return null;
-      //       } else {
-      //         final webview = await WebviewWindow.create(
-      //           configuration: CreateConfiguration(
-      //             userDataFolderWindows: await _getWebViewPath(),
-      //             titleBarTopPadding: Platform.isMacOS ? 20 : 0,
-      //           ),
-      //         );
-      //         webview
-      //           ..registerJavaScriptMessageHandler("test", (name, body) {
-      //             debugPrint('on javaScipt message: $name $body');
-      //           })
-      //           ..setApplicationNameForUserAgent("WebviewExample/1.0.0")
-      //           ..setPromptHandler((prompt, defaultText) {
-      //             if (prompt == "test") {
-      //               return "Hello World!";
-      //             } else if (prompt == "init") {
-      //               return "initial prompt";
-      //             }
-      //             return "";
-      //           })
-      //           ..addScriptToExecuteOnDocumentCreated("""
-      //           const mixinContext = {
-      //             platform: 'Desktop',
-      //             conversation_id: 'conversationId',
-      //             immersive: false,
-      //             app_version: '1.0.0',
-      //             appearance: 'dark',
-      //           }
-      //           window.MixinContext = {
-      //             getContext: function() {
-      //               return JSON.stringify(mixinContext)
-      //             }
-      //           }
-      //         """)
-      //           ..launch("https://geotek.com.ng/handpump03RR.php");
-      //       }
-      //     },
-      //     fontSize: constructFontSize(context, 18),
-      //     // fontSize: 12.0.sp,
-      //     borderRadius: 40,
-      //     fontColor: Colors.white,
-      //     fontWeight: FontWeight.bold,
-      //     backgroundColor: AppStyles.bgPrimary,
-      //   ),
-      // ),
     );
   }
 }
-
-// Future<String> _getWebViewPath() async {
-//   final document = await getApplicationDocumentsDirectory();
-//   return p.join(
-//     document.path,
-//     'desktop_webview_window',
-//   );
-// }

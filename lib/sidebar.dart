@@ -120,7 +120,7 @@ class _SideBarState extends State<SideBar> {
 
           // ListTile(),
           // ListTile(),
-          SizedBox(height: 10.0.hp),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.08),
           ListTile(
             title: Icon(
               Icons.logout,
@@ -129,7 +129,7 @@ class _SideBarState extends State<SideBar> {
             onTap: () async {
               debugPrint('[LOG OUT]');
               AuuthController.authInstance.signOut();
-             // Get.to(() => AuthenticationScreen());
+              // Get.to(() => AuthenticationScreen());
               // await authServices.signoutController();
             },
           ),
