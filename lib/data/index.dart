@@ -31,8 +31,8 @@ List<Map<String, dynamic>> boreholes = [
   {
     "name": "4",
     "borehole-ID": "BOREHOLE TI-20",
-    "longitude": 9.0447031,
-    "latitude": 9.896587499999999,
+    "longitude": 8.913382,
+    "latitude": 9.913696,
     "image": "assets/images/borehole__1.jpg",
     "address":
         " No. 20 Tina junction, Millionaires Quarters, Jos Plateau State",
