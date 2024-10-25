@@ -20,12 +20,14 @@ class CustomFormTextField extends StatelessWidget {
   Color? borderColor;
   double? fontSize;
   ImageIcon? prefixIcon;
+  TextInputAction? inputAction;
   TextEditingController? controller;
   TextInputType? keyboardType;
   CustomFormTextField({
     super.key,
     this.prefixIcon,
     this.height,
+    this.inputAction,
     this.background,
     this.textColor,
     this.paddingTop,
@@ -61,7 +63,7 @@ class CustomFormTextField extends StatelessWidget {
         maxLength: maxLength ?? 255,
         controller: controller ?? controller,
         keyboardType: keyboardType ?? TextInputType.multiline,
-        textInputAction: TextInputAction.next,
+        textInputAction: inputAction ?? TextInputAction.next,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hintText ?? '',

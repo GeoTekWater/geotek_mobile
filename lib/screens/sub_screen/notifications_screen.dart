@@ -32,7 +32,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             Size.fromHeight(MediaQuery.of(context).size.height * 0.08),
         child: Container(
           padding: EdgeInsets.only(
-            top: 4.0.hp,
+            top: MediaQuery.of(context).size.height * 0.05,
+            // top: 4.0.hp,
             left: 4.0.wp,
           ),
           child: PageHeader(scaffoldKey: scaffoldKey),
@@ -59,7 +60,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   child: ListView.builder(
                     itemCount: appNotifications.length,
                     itemBuilder: (context, index) {
-                      return NotificationCard(index: index, notification: appNotifications[index]);
+                      return NotificationCard(
+                          index: index, notification: appNotifications[index]);
                     },
                   ),
                 ),

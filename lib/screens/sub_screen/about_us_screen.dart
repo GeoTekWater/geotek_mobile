@@ -30,7 +30,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             Size.fromHeight(MediaQuery.of(context).size.height * 0.08),
         child: Container(
           padding: EdgeInsets.only(
-            top: 4.0.hp,
+            top: MediaQuery.of(context).size.height * 0.05,
+            // top: 4.0.hp,
             left: 4.0.wp,
           ),
           child: PageHeader(scaffoldKey: scaffoldKey),

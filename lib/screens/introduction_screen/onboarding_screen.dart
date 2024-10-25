@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/screens/auth/authentication_screen.dart';
+import 'package:geo_tek/screens/auth/login_page.dart';
 import 'package:get/get.dart';
 import '../../../widgets/buttons/custom_button.dart';
 import '../../../widgets/text/custom_text_widget.dart';
-import '../auth/login_page.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -56,6 +56,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     text:
                         'At Geotek, our mission is to develop practical and cutting-edge solutions to the issue of water shortage and to offer knowledge that will support groundwater management in sub-Saharan Africa. Water scarcity is a combined concern.',
                     // size: 13.0.sp,
+                    alignment: TextAlign.center,
                     size: constructFontSize(context, 20),
                     color: Colors.white,
                     // weight: FontWeight.bold,
@@ -74,7 +75,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   Get.off(
                     transition: Transition.fade,
                     duration: const Duration(milliseconds: 2000),
-                    () => const AuthenticationScreen(),
+                    () => const LoginScreen(),
                   );
                 },
                 // fontSize: 12.0.sp,
