@@ -72,7 +72,7 @@ class _MainMapState extends State<MainMap> {
             onTap: () {
               customInfoWindowcontroller.addInfoWindow!(
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.35,
                   // height: 25.0.hp,
                   padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).size.height * 0.02),
@@ -104,7 +104,7 @@ class _MainMapState extends State<MainMap> {
                       Container(
                         // color: AppStyles.bgBlack,
                         // height: 15.0.hp,
-                        height: MediaQuery.of(context).size.height * 0.12,
+                        height: MediaQuery.of(context).size.height * 0.15,
                         padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.03,
                           // bottom: 2.0.hp,
@@ -113,7 +113,7 @@ class _MainMapState extends State<MainMap> {
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
                               // mainAxisAlignment: MainAxisAlignment.start,
@@ -139,7 +139,9 @@ class _MainMapState extends State<MainMap> {
                                 text: 'More',
                                 width: 40.0.wp,
                                 // width: 20.0.hp,
-                                height: 4.0.hp,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03,
+                                // height: 4.0.hp,
                                 onTapHandler: () {
                                   Get.to(() =>
                                       BoreholeInfoScreen(boreHole: boreHole));
@@ -218,7 +220,7 @@ class _MainMapState extends State<MainMap> {
           CustomInfoWindow(
             controller: customInfoWindowcontroller,
             // height: 28.0.hp,
-            height: MediaQuery.of(context).size.height * 0.32,
+            height: MediaQuery.of(context).size.height * 0.35,
             width: 300,
             offset: 35,
           ),

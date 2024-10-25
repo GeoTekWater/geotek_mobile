@@ -14,6 +14,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     // DeviceOrientation.portraitDown,
   ]);
+
   runApp(
       //Provider(
       ///  auth: AuthServices(),

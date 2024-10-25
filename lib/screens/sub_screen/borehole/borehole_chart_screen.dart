@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/sidebar.dart';
+import 'package:al_downloader/al_downloader.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BoreHoleChartScreen extends StatefulWidget {
   const BoreHoleChartScreen({super.key});
@@ -23,15 +26,45 @@ class _BoreHoleChartScreenState extends State<BoreHoleChartScreen> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+
+    await Permission.storage.request();
+  }
+
+  int getRandomIntInRange(int min, int max) {
+    Random random = Random();
+    return min + random.nextInt(max - min + 1);
   }
 
   @override
   void initState() {
     super.initState();
+    ALDownloader.initialize();
+    ALDownloader.configurePrint(enabled: true, frequentEnabled: false);
+
     initializeScreenOrientation();
 
     controller = WebViewController()
       ..setNavigationDelegate(NavigationDelegate(
+        onUrlChange: (UrlChange url) {
+          if (url.toString().endsWith('png')) {
+            debugPrint('[URL]  ::  ${url.toString().endsWith('png')}');
+
+            ALDownloader.download(url.toString(),
+                directoryPath: '/data/user/0/com.your.app.package/files/',
+                fileName: getRandomIntInRange(100, 11000).toString(),
+                downloaderHandlerInterface:
+                    ALDownloaderHandlerInterface(progressHandler: (progress) {
+                  debugPrint(
+                      'ALDownloader | download progress = $progress, url = $url\n');
+                }, succeededHandler: () {
+                  debugPrint('ALDownloader | download succeeded, url = $url\n');
+                }, failedHandler: () {
+                  debugPrint('ALDownloader | download failed, url = $url\n');
+                }, pausedHandler: () {
+                  debugPrint('ALDownloader | download paused, url = $url\n');
+                }));
+          }
+        },
         onPageStarted: (url) {
           setState(() {
             loadingPercentage = 0;
@@ -43,9 +76,11 @@ class _BoreHoleChartScreenState extends State<BoreHoleChartScreen> {
           });
         },
         onPageFinished: (url) {
-          setState(() {
-            loadingPercentage = 100;
-          });
+          setState(
+            () {
+              loadingPercentage = 100;
+            },
+          );
 
           //     controller.runJavaScript("""
           // var meta = document.createElement('meta');

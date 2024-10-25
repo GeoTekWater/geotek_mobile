@@ -292,8 +292,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           // if (kDebugMode) {
                           //   print('click');
                           // }
+                          Get.snackbar(
+                            'Message',
+                            'Coming soon!',
+                            colorText: Colors.white,
+                            backgroundColor: AppStyles.bgBlue.withOpacity(0.4),
+                          );
                           // // OAUTH-GOOGLE: LOGIN
-                          AuuthController.authInstance.signInWithGoogle();
+                          // AuuthController.authInstance.signInWithGoogle();
                         },
                         child: Container(
                           width: 20.0.wp,

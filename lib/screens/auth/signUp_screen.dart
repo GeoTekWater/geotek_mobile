@@ -262,8 +262,15 @@ class _SignupScreenState extends State<SignupScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                AuuthController.authInstance
-                                    .googleSignInAccount();
+                                Get.snackbar(
+                                  'Message',
+                                  'Coming soon!',
+                                  colorText: Colors.white,
+                                  backgroundColor:
+                                      AppStyles.bgBlue.withOpacity(0.4),
+                                );
+                                // AuuthController.authInstance
+                                //     .googleSignInAccount();
                               },
                               child: Container(
                                 width: 20.0.wp,
@@ -313,46 +320,6 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                           ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5.0.hp),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomTextWidget(
-                          text: 'Already have an account? ',
-                          // size: 12.0.sp,
-                          size: constructFontSize(context, 16),
-                          color: AppStyles.bgGray4,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // GO-TO: SIGNUP
-                            Get.to(
-                              transition: Transition.rightToLeft,
-                              duration: Duration(milliseconds: 800),
-                              () => LoginScreen(),
-                            );
-                          },
-                          //ttyyyyuuutr
-                          child: Container(
-                            width: 20.0.wp,
-                            height: 6.0.hp,
-                            decoration: BoxDecoration(
-                                color: AppStyles.bgWhite.withOpacity(0.8),
-                                borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppStyles.bgBlue,
-                                    blurRadius: 3,
-                                  )
-                                ]),
-                            child: Center(
-                              child: SvgPicture.asset(
-                                  'assets/icons/icon__facebook.svg'),
-                            ),
-                          ),
                         ),
                       ],
                     ),

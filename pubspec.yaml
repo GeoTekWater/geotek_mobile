@@ -53,6 +53,7 @@ dependencies:
     flutter_html: 
     foundation_flutter: ^0.2.0
     # desktop_webview_window: ^0.2.0
+    al_downloader: ^1.7.4
 
 dev_dependencies:
     flutter_test:
