@@ -92,7 +92,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                         fontStyle: FontStyle.italic,
                         lineHeight: 2,
                         text:
-                            'Founded by passionate individuals, our integrated design, which is being created from a research-driven approach, is what makes our solution special. We have developed a tool that will enhance understanding of groundwater and help make better decisions, particularly in a region that is most threatened by water scarcity and freshwater depletion.',
+                            'Founded by individuals passionate about addressing water scarcity in sub-Saharan Africa. Our research-driven approach has led to the development of innovative tools that monitor water infrastructures, such as boreholes and hand pumps. These tools ensure sustainable access to clean water in regions most threatened by freshwater depletion.',
                         color: AppStyles.bgPrimary,
                         size: constructFontSize(context, 18),
                       ),

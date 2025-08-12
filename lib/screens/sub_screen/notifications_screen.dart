@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/data/index.dart';
 import 'package:geo_tek/screens/sub_screen/detail_notification.dart';
@@ -22,6 +23,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       key: scaffoldKey,
@@ -63,6 +66,26 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       return NotificationCard(
                           index: index, notification: appNotifications[index]);
                     },
+                  ),
+                ),
+                SizedBox(
+                  // color: Colors.red,
+                  width: double.maxFinite,
+                  height: screenHeight * 0.6,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Lottie.asset(
+                        'assets/animations/animation__empty__1.json',
+                        width: screenWidth * 0.6,
+                      ),
+                      const SizedBox(height: 5),
+                      CustomTextWidget(
+                        size: 14,
+                        text: 'You do not have any notifications',
+                      ),
+                    ],
                   ),
                 ),
               ],

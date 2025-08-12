@@ -1,47 +1,158 @@
 {
-  "project_info": {
-    "project_number": "543802564954",
-    "project_id": "geotek-6e030",
-    "storage_bucket": "geotek-6e030.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:543802564954:android:46c66fc5c22cdc72861363",
-        "android_client_info": {
-          "package_name": "com.example.geo_tek"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "543802564954-sg5q2rvtrfg6lp073mgnpud57sb32jg1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.geo_tek",
-            "certificate_hash": "aaa00a37e983a44245fc4992ebef0c7b4087c5da"
-          }
-        },
-        {
-          "client_id": "543802564954-f3h7d4vgdrua5297tbls7umiqtplh6gg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAjPOib8glDpC6fFOWWqw7FBAI3_eJfiYY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "543802564954-f3h7d4vgdrua5297tbls7umiqtplh6gg.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+	"project_info": {
+		"project_number": "2370216411",
+		"project_id": "geotek-e80eb",
+		"storage_bucket": "geotek-e80eb.firebasestorage.app"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:2370216411:android:f67cd137dc8b22ba6047fe",
+				"android_client_info": {
+					"package_name": "com.geotek.geotek"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "2370216411-hng548qbf82a3sppol6n70okp9daqobn.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "com.geotek.geotek",
+						"certificate_hash": "f3e85a7b333c87af58ad9e6cc03834e253690cf9"
+					}
+				},
+				{
+					"client_id": "2370216411-mddi7ek5gv3srq5lbo5a8otmknv1ga4a.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyAR0FXZByP1hgbfv4KGTsNyVArym-LQosc"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "2370216411-mddi7ek5gv3srq5lbo5a8otmknv1ga4a.apps.googleusercontent.com",
+							"client_type": 3
+						}
+					]
+				}
+			}
+		},
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:2370216411:android:d03ac30afbfa52806047fe",
+				"android_client_info": {
+					"package_name": "com.geotek.watersolutions"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "2370216411-o7er323ccj4nupgkegiokq25f97v50r6.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "com.geotek.watersolutions",
+						"certificate_hash": "f3e85a7b333c87af58ad9e6cc03834e253690cf9"
+					}
+				},
+				{
+					"client_id": "2370216411-mddi7ek5gv3srq5lbo5a8otmknv1ga4a.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyAR0FXZByP1hgbfv4KGTsNyVArym-LQosc"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "2370216411-mddi7ek5gv3srq5lbo5a8otmknv1ga4a.apps.googleusercontent.com",
+							"client_type": 3
+						}
+					]
+				}
+			}
+		},
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:2370216411:android:f57e72a2933518ed6047fe",
+				"android_client_info": {
+					"package_name": "com.geotek.solutions"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "2370216411-84pquq1al2p6ov0h1r1e4qfch5g3aede.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "com.geotek.solutions",
+						"certificate_hash": "f3e85a7b333c87af58ad9e6cc03834e253690cf9"
+					}
+				},
+				{
+					"client_id": "2370216411-mddi7ek5gv3srq5lbo5a8otmknv1ga4a.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyAR0FXZByP1hgbfv4KGTsNyVArym-LQosc"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "2370216411-mddi7ek5gv3srq5lbo5a8otmknv1ga4a.apps.googleusercontent.com",
+							"client_type": 3
+						}
+					]
+				}
+			}
+		},
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:2370216411:android:773457fff95785446047fe",
+				"android_client_info": {
+					"package_name": "com.geotek.watersolutions"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "2370216411-471n889hob1pnsbcrlrnl8tc1ov0skna.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "com.geotek.watersolutions",
+						"certificate_hash": "f3e85a7b333c87af58ad9e6cc03834e253690cf9"
+					}
+				},
+				{
+					"client_id": "2370216411-mddi7ek5gv3srq5lbo5a8otmknv1ga4a.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyAR0FXZByP1hgbfv4KGTsNyVArym-LQosc"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "2370216411-mddi7ek5gv3srq5lbo5a8otmknv1ga4a.apps.googleusercontent.com",
+							"client_type": 3
+						}
+					]
+				}
+			}
+		}
+	],
+	"configuration_version": "1"
 }

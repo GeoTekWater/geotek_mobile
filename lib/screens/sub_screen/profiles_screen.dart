@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geo_tek/auth_controller.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/widgets/buttons/custom_button.dart';
 import 'package:geo_tek/widgets/navigation/pageheader.dart';
@@ -319,6 +320,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //   () => BoreHoleMaintenanceHistoryScreen(
                 //       boreHole: widget.boreHole),
                 // );
+
+                AuuthController.authInstance.updateProfile('email@user.com');
               },
               fontSize: constructFontSize(context, 16),
               // fontSize: 12.0.sp,

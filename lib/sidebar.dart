@@ -14,6 +14,8 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_storage/get_storage.dart';
 
+final authStorage = GetStorage();
+
 class SideBar extends StatefulWidget {
   const SideBar({super.key});
 
@@ -22,8 +24,6 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-  final authStorage = GetStorage();
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -72,16 +72,16 @@ class _SideBarState extends State<SideBar> {
             },
           ),
 
-          ListTile(
-            title: Icon(
-              Icons.person,
-              color: AppStyles.bgWhite,
-            ),
-            onTap: () {
-              Get.to(() => ProfileScreen());
-              debugPrint('[PROFILE SCREEN]');
-            },
-          ),
+          // ListTile(
+          //   title: Icon(
+          //     Icons.person,
+          //     color: AppStyles.bgWhite,
+          //   ),
+          //   onTap: () {
+          //     Get.to(() => ProfileScreen());
+          //     debugPrint('[PROFILE SCREEN]');
+          //   },
+          // ),
           ListTile(
             title: Icon(
               Icons.info,
@@ -128,6 +128,9 @@ class _SideBarState extends State<SideBar> {
             ),
             onTap: () async {
               debugPrint('[LOG OUT]');
+
+              getStorage.remove('GEOTEK_USER');
+
               AuuthController.authInstance.signOut();
               // Get.to(() => AuthenticationScreen());
               // await authServices.signoutController();

@@ -76,63 +76,63 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 2.0.hp),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: screenHeight * 0.1,
-                    width: screenWidth * 0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: AssetImage(
-                          'assets/images/borehole__2.jpg',
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: screenHeight * 0.1,
-                    width: screenWidth * 0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: AssetImage(
-                          'assets/images/borehole__3.jpg',
-                        ),
-                      ),
-                    ),
-                  ),
-                  Stack(
-                    children: [
-                      Container(
-                        height: screenHeight * 0.1,
-                        width: screenWidth * 0.3,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/borehole__4.jpg',
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 4.0.hp,
-                        left: 10.0.wp,
-                        right: 0,
-                        bottom: 0,
-                        child: CustomTextWidget(
-                          text: 'See more',
-                          color: AppStyles.bgWhite,
-                          size: constructFontSize(context, 14),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+              // SizedBox(height: 2.0.hp),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Container(
+              //       height: screenHeight * 0.1,
+              //       width: screenWidth * 0.3,
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(10),
+              //         image: DecorationImage(
+              //           image: AssetImage(
+              //             'assets/images/borehole__2.jpg',
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     Container(
+              //       height: screenHeight * 0.1,
+              //       width: screenWidth * 0.3,
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(10),
+              //         image: DecorationImage(
+              //           image: AssetImage(
+              //             'assets/images/borehole__3.jpg',
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     Stack(
+              //       children: [
+              //         Container(
+              //           height: screenHeight * 0.1,
+              //           width: screenWidth * 0.3,
+              //           decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.circular(10),
+              //             image: DecorationImage(
+              //               image: AssetImage(
+              //                 'assets/images/borehole__4.jpg',
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //         Positioned(
+              //           top: 4.0.hp,
+              //           left: 10.0.wp,
+              //           right: 0,
+              //           bottom: 0,
+              //           child: CustomTextWidget(
+              //             text: 'See more',
+              //             color: AppStyles.bgWhite,
+              //             size: constructFontSize(context, 14),
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 2.0.hp),
               Container(
                 width: double.maxFinite,

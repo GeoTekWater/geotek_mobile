@@ -26,10 +26,11 @@ class NotificationCard extends StatelessWidget {
         onTap: () {
           Get.to(() => NotificationDetailScreen(notification: notification));
         },
-        leading: Image.asset(
-          'assets/icons/icon__marker.png',
-          width: constructFontSize(context, 20),
-        ),
+        leading: Icon(Icons.notifications_active_outlined),
+        // leading: Image.asset(
+        //   'assets/icons/icon__marker.png',
+        //   width: constructFontSize(context, 20),
+        // ),
         title: CustomTextWidget(
           text: '${notification['title']}',
           size: constructFontSize(context, 16),

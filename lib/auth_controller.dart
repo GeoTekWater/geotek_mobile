@@ -1,17 +1,20 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:flutter/material.dart';
-import 'package:geo_tek/config/app_config.dart';
-import 'package:geo_tek/screens/auth/authentication_screen.dart';
-import 'package:geo_tek/screens/auth/login_page.dart';
-import 'package:geo_tek/screens/auth/signUp_screen.dart';
-import 'package:geo_tek/screens/introduction_screen/splaash_screen.dart';
-import 'package:geo_tek/screens/sub_screen/home_page.dart';
-import 'package:geo_tek/widgets/text/custom_text_widget.dart';
+import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:otp/otp.dart';
+import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:geo_tek/config/app_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:otp/otp.dart';
+import 'package:geo_tek/screens/auth/login_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geo_tek/screens/sub_screen/home_page.dart';
+import 'package:geo_tek/widgets/text/custom_text_widget.dart';
+import 'package:geo_tek/screens/auth/authentication_screen.dart';
+import 'package:geo_tek/screens/introduction_screen/splaash_screen.dart';
+
+GetStorage getStorage = GetStorage();
 
 class AuuthController extends GetxController {
   static AuuthController authInstance = Get.find();
@@ -21,6 +24,8 @@ class AuuthController extends GetxController {
   GoogleSignIn googleSign = GoogleSignIn();
 
   var authRequestInProgress = false.obs;
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void onReady() {
@@ -50,6 +55,11 @@ class AuuthController extends GetxController {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
+      getStorage.write('GEOTEK_USER', {
+        "email": email,
+        "name": name,
+      });
+
       authRequestInProgress.value = false;
     } catch (e) {
       authRequestInProgress.value = false;
@@ -71,21 +81,25 @@ class AuuthController extends GetxController {
       authRequestInProgress.value = true;
 
       UserCredential user = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
 
       debugPrint('[USER] :: ${user.toString()}');
+
+      getStorage.write('GEOTEK_USER', {
+        "email": email,
+        "name": user.user!.displayName,
+      });
 
       authRequestInProgress.value = false;
     } catch (e) {
       authRequestInProgress.value = false;
 
       Get.snackbar(
-        'Login Details',
-        "message for user",
+        'Message',
+        "An error occurred during login.",
         snackPosition: SnackPosition.BOTTOM,
-        titleText: const Text('Message'),
-        messageText: Text("An error occured during login."),
-        // messageText: Text(e.toString()),
         backgroundColor: AppStyles.bgBrightRed,
       );
     }
@@ -203,6 +217,34 @@ class AuuthController extends GetxController {
         backgroundColor: Colors.red,
       );
       print(e);
+    }
+  }
+
+  void updateProfile(String email) async {
+    try {
+      log('[UPDATE-PROFILE-PROCESSING]');
+
+      final userId = auth.currentUser?.uid;
+
+      if (userId == null) {
+        throw Exception('No authenticated user found');
+      }
+
+      await _firestore.collection('profile').doc(userId).set({
+        'name': 'name',
+        'email': email,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      log('[UPDATE-PROFILE-SUCCESS]');
+    } catch (error) {
+      log('[UPDATE-PROFILE-FAILED] :: $error');
+
+      Get.snackbar(
+        'Error',
+        'An error occured while updating profile',
+        backgroundColor: Colors.red,
+      );
     }
   }
 

@@ -58,61 +58,53 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
                   ),
                 ),
                 SizedBox(height: 2.0.hp),
-                Icon(
-                  Icons.location_on,
-                  color: Colors.orange,
-                  size: 60,
+                CustomTextWidget(
+                  alignment: TextAlign.center,
+                  text: widget.notification['title'],
+                  size: constructFontSize(context, 18),
+                  color: AppStyles.bgPrimary,
+                  weight: FontWeight.w600,
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 2.0.hp,
-                    horizontal: 4.0.wp,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppStyles.bgPrimaryLight,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: CustomTextWidget(
-                    alignment: TextAlign.center,
-                    text: widget.notification['title'],
-                    size: constructFontSize(context, 18),
-                    color: AppStyles.bgPrimary,
-                    weight: FontWeight.w600,
-                  ),
+                SizedBox(height: 4.0.hp),
+                CustomTextWidget(
+                  lineHeight: 1.6,
+                  color: AppStyles.bgBlack,
+                  size: constructFontSize(context, 18),
+                  text: widget.notification['description'],
                 ),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        height: screenHeight * 0.08,
-        padding: EdgeInsets.symmetric(horizontal: 2.0.wp),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomButton(
-              text: 'View Borehole',
-              width: screenWidth * 0.95,
-              // width: 20.0.hp,
-              height: 6.0.hp,
-              onTapHandler: () {
-                Get.to(
-                  () => BoreHoleNotificationMaintenanceHistoryScreen(
-                    boreHole: widget.notification,
-                  ),
-                );
-              },
-              fontSize: constructFontSize(context, 16),
-              // fontSize: 12.0.sp,
-              borderRadius: 10,
-              fontColor: Colors.white,
-              fontWeight: FontWeight.bold,
-              backgroundColor: AppStyles.bgPrimary,
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   height: screenHeight * 0.08,
+      //   padding: EdgeInsets.symmetric(horizontal: 2.0.wp),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       CustomButton(
+      //         text: 'View Borehole',
+      //         width: screenWidth * 0.95,
+      //         // width: 20.0.hp,
+      //         height: 6.0.hp,
+      //         onTapHandler: () {
+      //           Get.to(
+      //             () => BoreHoleNotificationMaintenanceHistoryScreen(
+      //               boreHole: widget.notification,
+      //             ),
+      //           );
+      //         },
+      //         fontSize: constructFontSize(context, 16),
+      //         // fontSize: 12.0.sp,
+      //         borderRadius: 10,
+      //         fontColor: Colors.white,
+      //         fontWeight: FontWeight.bold,
+      //         backgroundColor: AppStyles.bgPrimary,
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

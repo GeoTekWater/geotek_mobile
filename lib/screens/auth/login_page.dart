@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'dart:developer';
+// import 'package:geolocator/geolocator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geo_tek/screens/auth/signUp_screen.dart';
 import 'package:geo_tek/screens/introduction_screen/onboarding_screen.dart';
 import 'package:geo_tek/screens/sub_screen/home_page.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/widgets/buttons/custom_button.dart';
@@ -13,6 +15,7 @@ import 'package:geo_tek/widgets/text/cutom_formtext_field.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:location/location.dart';
 import '../../auth_controller.dart';
 import '../../widgets/text/custom_formpassword_field.dart';
 import 'forgot_password.dart';
@@ -34,6 +37,81 @@ class _LoginScreenState extends State<LoginScreen> {
   // Google Signin
   var googleSignin = false.obs;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> initializeUserLocationPermission() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    bool serviceEnabled;
+    PermissionStatus permission;
+    // LocationPermission permission;
+    Location location = Location();
+
+    serviceEnabled = await location.serviceEnabled();
+
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+    }
+
+    permission = await location.hasPermission();
+    if (permission != PermissionStatus.denied) {
+      permission = await location.requestPermission();
+    } else {
+      log('Location permissions are denied. Requesting permission...');
+      permission = await location.requestPermission();
+    }
+
+    // Test if location services are enabled.
+    // serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    // serviceEnabled = await location.serviceEnabled();
+    // if (!serviceEnabled) {
+    //   serviceEnabled = await location.serviceEnabled();
+    // Location services are not enabled, request user to enable them.
+    // await Geolocator
+    //     .requestPermission();
+    // This will open the device's location settings.
+    // Return an error or handle accordingly.
+    //   log('Location services are disabled. Please enable them.');
+    // }
+
+    // permission = await Geolocator.checkPermission();
+    // if (permission == LocationPermission.denied) {
+    //   permission = await Geolocator.requestPermission();
+
+    //   if (permission == LocationPermission.denied) {
+    //     // Permissions are denied, request permission again with a rationale.
+    //     await Geolocator.requestPermission();
+
+    //     if (permission == LocationPermission.denied) {
+    //       // Permissions are still denied, handle accordingly.
+
+    //       log('Location permissions are denied');
+    //     } else {
+    //       log('Location permissions are enabled');
+    //     }
+    //   }
+    // }
+
+    // if (permission == LocationPermission.deniedForever) {
+    // Permissions are denied forever, handle accordingly.
+    // You can't request permissions again, so you may want to provide an alternative.
+    //   log(
+    //     'Location permissions are permanently denied. We cannot request permissions. Please go to your app settings and enable location permissions.',
+    //   );
+    // }
+
+    // if (permission == LocationPermission.always ||
+    //  permission == LocationPermission.whileInUse) {
+    // When we reach here, permissions are granted and we can continue accessing the position of the device.
+    // Position position = await Geolocator.getCurrentPosition();
+
+    // log('[POSITION-LATITUDE] :: ${position.latitude}');
+    // log('[POSITION-LONGITUDE] :: ${position.longitude}');
+
+    //return;
+    //   } else {
+    //     return;
+    //   }
+  }
 
   Future<void> signinHandler() async {
     //Get.off(() => HomeScreen());
@@ -82,6 +160,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    initializeUserLocationPermission();
+
     super.initState();
   }
 

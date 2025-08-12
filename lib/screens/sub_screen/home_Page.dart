@@ -2,10 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:geo_tek/config/app_config.dart';
+import 'package:geo_tek/screens/sub_screen/add_water_system_screen.dart';
 import 'package:geo_tek/sidebar.dart';
 import 'package:geo_tek/widgets/navigation/pageheader.dart';
+import 'package:get/get.dart';
 
 import '../map/main_map.dart';
+import '../map/map_interface_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,12 +48,23 @@ class _HomeScreenState extends State<HomeScreen>
       //   backgroundColor: AppStyles.bgWhite,
       //   elevation: 0,
       // ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          color: AppStyles.bgWhite,
+        ),
+        onPressed: () {
+          Get.to(() => const AddWaterSystemScreen());
+        },
+        backgroundColor: AppStyles.bgPrimary,
+      ),
       body: SafeArea(
         child: Stack(
           children: [
             Container(
               color: AppStyles.bgWhite,
-              child: MainMap(),
+              // child: MainMap(),
+              child: MapInterface(),
             ),
             Positioned(
               top: MediaQuery.of(context).size.height * 0.02,
