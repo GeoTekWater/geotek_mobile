@@ -48,6 +48,7 @@ class _MapInterfaceState extends State<MapInterface> {
       markers.clear();
 
       for (final BoreHoleModel boreHole in appBoreholesInformation) {
+      // for (final BoreHoleModel boreHole in dueDiligenceBoreHolesInformations) {
         final lat = double.parse(boreHole.latitude!.toString());
         final lng = double.parse(boreHole.longitude!.toString());
 

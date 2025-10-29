@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_storage/get_storage.dart';
 
-final authStorage = GetStorage();
+// final authStorage = GetStorage();
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});

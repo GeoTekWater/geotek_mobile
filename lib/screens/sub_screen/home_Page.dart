@@ -49,14 +49,15 @@ class _HomeScreenState extends State<HomeScreen>
       //   elevation: 0,
       // ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          color: AppStyles.bgWhite,
-        ),
         onPressed: () {
           Get.to(() => const AddWaterSystemScreen());
         },
         backgroundColor: AppStyles.bgPrimary,
+        child: Text(
+          'Report',
+          style: TextStyle(
+              color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.bold),
+        ),
       ),
       body: SafeArea(
         child: Stack(

@@ -77,6 +77,7 @@ class AuuthController extends GetxController {
   }
 
   void login(String email, password) async {
+    print('🔹 [LOGIN FUNCTION CALLED]');
     try {
       authRequestInProgress.value = true;
 
@@ -85,23 +86,20 @@ class AuuthController extends GetxController {
         password: password,
       );
 
-      debugPrint('[USER] :: ${user.toString()}');
+      log('[USER] :: ${user.toString()}');
 
       getStorage.write('GEOTEK_USER', {
         "email": email,
-        "name": user.user!.displayName,
+        "name": user.user?.displayName ?? 'No name',
       });
+
+      final stored = getStorage.read('GEOTEK_USER');
+      log('✅ [DEBUG] Stored user data: $stored');
 
       authRequestInProgress.value = false;
     } catch (e) {
       authRequestInProgress.value = false;
-
-      Get.snackbar(
-        'Message',
-        "An error occurred during login.",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppStyles.bgBrightRed,
-      );
+      print('❌ Login error: $e');
     }
   }
 

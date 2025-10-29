@@ -75,11 +75,25 @@ class _AddWaterSystemScreenState extends State<AddWaterSystemScreen> {
           backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
         );
         return;
+      }
+
+      final user = getStorage.read('GEOTEK_USER');
+
+      if (user == null) {
+        isAddWaterSystemProcessing.value = false;
+
+        Get.snackbar("Error", "user not found. Please Log in again.",
+            colorText: AppStyles.bgWhite,
+            duration: const Duration(milliseconds: 3500),
+            backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5));
       } else {
         Map data = {
+          // "lastName": " ",
+          // "email": authStorage.read('GEOTEK_USER')['email'].toString(),
+          // "firstName": authStorage.read('GEOTEK_USER')['name'].toString(),
           "lastName": " ",
-          "email": authStorage.read('GEOTEK_USER')['email'].toString(),
-          "firstName": authStorage.read('GEOTEK_USER')['name'].toString(),
+          "email": user['email'].toString() ?? "unknown@gmail.com",
+          "firstName": user["name"].toString() ?? "unknown",
           "message":
               "GEOTEK: Add Water System \nLocation: ${locationController.text.trim()}\nWater Quality: $waterQualityValue\nPump Functionality: $pumpFunctionalityValue",
         };
@@ -215,6 +229,7 @@ class _AddWaterSystemScreenState extends State<AddWaterSystemScreen> {
                 },
                 hint: const Text("Pump functionality"),
               ),
+              SizedBox(height: 2.0.hp),
               Center(
                 child: CustomButton(
                   text: imageUploaded ? 'Update Image' : 'Choose Image',
@@ -222,7 +237,8 @@ class _AddWaterSystemScreenState extends State<AddWaterSystemScreen> {
                   height: 35,
                   onTapHandler: () async {
                     // Upload File Handler
-                    PlatformFile? platformFile = await getImageFromGallery();
+                    // PlatformFile? platformFile = await getImageFromGallery();
+                    PlatformFile? platformFile = await pickImage(context);
 
                     setState(() {
                       if (platformFile != null) {

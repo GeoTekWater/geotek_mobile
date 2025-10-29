@@ -222,53 +222,53 @@ class _BoreholeInfoScreenState extends State<BoreholeInfoScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 2.0.hp),
+              SizedBox(height: 3.0.hp),
+              Container(
+                height: screenHeight * 0.08,
+                padding: EdgeInsets.symmetric(horizontal: 2.0.wp),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomButton(
+                      text: 'Sensor Readings',
+                      width: screenWidth * 0.45,
+                      // width: 20.0.hp,
+                      height: 5.0.hp,
+                      onTapHandler: () {
+                        Get.to(
+                          () => BoreHoleChartScreen(),
+                        );
+                      },
+                      fontSize: constructFontSize(context, 14),
+                      // fontSize: 12.0.sp,
+                      borderRadius: 30,
+                      fontColor: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      backgroundColor: AppStyles.bgPrimary,
+                    ),
+                    CustomButton(
+                      text: 'Maintenance History',
+                      width: screenWidth * 0.45,
+                      // width: 20.0.hp,
+                      height: 5.0.hp,
+                      onTapHandler: () {
+                        Get.to(
+                          () => BoreHoleMaintenanceHistoryScreen(
+                              boreHole: widget.boreHole),
+                        );
+                      },
+                      fontSize: constructFontSize(context, 14),
+                      // fontSize: 12.0.sp,
+                      borderRadius: 30,
+                      fontColor: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      backgroundColor: AppStyles.bgPrimary,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        height: screenHeight * 0.08,
-        padding: EdgeInsets.symmetric(horizontal: 2.0.wp),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomButton(
-              text: 'Sensor Readings',
-              width: screenWidth * 0.45,
-              // width: 20.0.hp,
-              height: 6.0.hp,
-              onTapHandler: () {
-                Get.to(
-                  () => BoreHoleChartScreen(),
-                );
-              },
-              fontSize: constructFontSize(context, 16),
-              // fontSize: 12.0.sp,
-              borderRadius: 40,
-              fontColor: Colors.white,
-              fontWeight: FontWeight.bold,
-              backgroundColor: AppStyles.bgPrimary,
-            ),
-            CustomButton(
-              text: 'Maintenance History',
-              width: screenWidth * 0.45,
-              // width: 20.0.hp,
-              height: 6.0.hp,
-              onTapHandler: () {
-                Get.to(
-                  () => BoreHoleMaintenanceHistoryScreen(
-                      boreHole: widget.boreHole),
-                );
-              },
-              fontSize: constructFontSize(context, 16),
-              // fontSize: 12.0.sp,
-              borderRadius: 40,
-              fontColor: Colors.white,
-              fontWeight: FontWeight.bold,
-              backgroundColor: AppStyles.bgPrimary,
-            ),
-          ],
         ),
       ),
     );
