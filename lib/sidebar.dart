@@ -3,18 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:geo_tek/auth_controller.dart';
 import 'package:geo_tek/config/app_config.dart';
-import 'package:geo_tek/screens/auth/authentication_screen.dart';
 import 'package:geo_tek/screens/sub_screen/about_us_screen.dart';
 import 'package:geo_tek/screens/sub_screen/contact_us_screen.dart';
 import 'package:geo_tek/screens/sub_screen/home_page.dart';
 import 'package:geo_tek/screens/sub_screen/notifications_screen.dart';
-import 'package:geo_tek/screens/sub_screen/profiles_screen.dart';
 import 'package:geo_tek/widgets/text/custom_text_widget.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_storage/get_storage.dart';
-
-// final authStorage = GetStorage();
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});
@@ -128,12 +123,7 @@ class _SideBarState extends State<SideBar> {
             ),
             onTap: () async {
               debugPrint('[LOG OUT]');
-
-              getStorage.remove('GEOTEK_USER');
-
               AuuthController.authInstance.signOut();
-              // Get.to(() => AuthenticationScreen());
-              // await authServices.signoutController();
             },
           ),
         ],

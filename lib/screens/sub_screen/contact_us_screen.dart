@@ -3,7 +3,8 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// FIREBASE (kept for reference / restore later)
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,7 +68,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       );
     } else {
       Dio dio = Dio();
-      FirebaseAuth auth = FirebaseAuth.instance;
+      // FIREBASE (commented out — was unused)
+      // FirebaseAuth auth = FirebaseAuth.instance;
 
       Map data = {
         "email": emailController.text.trim().toLowerCase(),

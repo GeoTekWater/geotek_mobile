@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:core';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geo_tek/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:geo_tek/config/app_config.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// FIREBASE / Google Sign-In (kept for reference)
+// import 'package:google_sign_in/google_sign_in.dart';
+import 'package:location/location.dart';
 import 'package:geo_tek/widgets/buttons/custom_button.dart';
 import 'package:geo_tek/widgets/text/custom_formpassword_field.dart';
 import 'package:geo_tek/widgets/text/custom_text_widget.dart';
@@ -33,7 +36,25 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Map dto = {};
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  // final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> initializeUserLocationPermission() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    Location location = Location();
+
+    bool serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+    }
+
+    PermissionStatus permission = await location.hasPermission();
+    if (permission == PermissionStatus.denied) {
+      permission = await location.requestPermission();
+    }
+
+    log('[SIGNUP-LOCATION-PERMISSION] :: $permission');
+  }
 
   Future<void> signupHandler() async {
     if (!fullnameController.text.trim().isNotEmpty ||
@@ -81,9 +102,18 @@ class _SignupScreenState extends State<SignupScreen> {
         backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5),
       );
     } else {
-      AuuthController.authInstance.registration(emailController.text,
-          passwordController.text, fullnameController.text);
+      AuuthController.authInstance.registration(
+        emailController.text.trim(),
+        passwordController.text.trim(),
+        fullnameController.text.trim(),
+      );
     }
+  }
+
+  @override
+  void initState() {
+    initializeUserLocationPermission();
+    super.initState();
   }
 
   @override

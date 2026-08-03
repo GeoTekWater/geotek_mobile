@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:geo_tek/auth_controller.dart';
 import 'package:geo_tek/utils/index.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:geo_tek/sidebar.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/widgets/buttons/custom_button.dart';
 import 'package:geo_tek/widgets/navigation/pageheader.dart';
@@ -15,7 +15,8 @@ import 'package:geo_tek/widgets/text/custom_text_widget.dart';
 import 'package:geo_tek/widgets/text/cutom_formtext_field.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-GetStorage getStorage = GetStorage();
+// Prefer the shared GetStorage instance from auth_controller
+// GetStorage getStorage = GetStorage();
 
 class AddWaterSystemScreen extends StatefulWidget {
   const AddWaterSystemScreen({super.key});
@@ -77,7 +78,7 @@ class _AddWaterSystemScreenState extends State<AddWaterSystemScreen> {
         return;
       }
 
-      final user = getStorage.read('GEOTEK_USER');
+      final user = getStorage.read(sessionKey);
 
       if (user == null) {
         isAddWaterSystemProcessing.value = false;
@@ -86,39 +87,65 @@ class _AddWaterSystemScreenState extends State<AddWaterSystemScreen> {
             colorText: AppStyles.bgWhite,
             duration: const Duration(milliseconds: 3500),
             backgroundColor: AppStyles.bgBrightRed.withOpacity(0.5));
-      } else {
+        return;
+      }
+
+      // Primary persistence: localStorage (GetStorage) — aligns with local auth
+      // and works offline. Firebase Firestore is a better fit only if staff need
+      // a shared cloud inbox; left commented below for easy restore.
+      final report = {
+        'id': DateTime.now().millisecondsSinceEpoch.toString(),
+        'email': user['email']?.toString() ?? 'unknown@gmail.com',
+        'name': user['name']?.toString() ?? 'unknown',
+        'location': locationController.text.trim(),
+        'waterQuality': waterQualityValue,
+        'pumpFunctionality': pumpFunctionalityValue,
+        'latitude': user['latitude'],
+        'longitude': user['longitude'],
+        'imagePath': imageUploaded ? image.path : null,
+        'createdAt': DateTime.now().toIso8601String(),
+      };
+
+      AuuthController.authInstance.saveReport(report);
+
+      // ── FIREBASE Firestore report save (commented out — restore if needed) ──
+      // await FirebaseFirestore.instance.collection('reports').add({
+      //   ...report,
+      //   'createdAt': FieldValue.serverTimestamp(),
+      // });
+
+      // Optional remote notification (existing API) — best-effort, does not
+      // block local save success if the network call fails.
+      try {
         Map data = {
-          // "lastName": " ",
-          // "email": authStorage.read('GEOTEK_USER')['email'].toString(),
-          // "firstName": authStorage.read('GEOTEK_USER')['name'].toString(),
           "lastName": " ",
-          "email": user['email'].toString() ?? "unknown@gmail.com",
-          "firstName": user["name"].toString() ?? "unknown",
+          "email": report['email'],
+          "firstName": report['name'],
           "message":
-              "GEOTEK: Add Water System \nLocation: ${locationController.text.trim()}\nWater Quality: $waterQualityValue\nPump Functionality: $pumpFunctionalityValue",
+              "GEOTEK: Add Water System \nLocation: ${report['location']}\nWater Quality: $waterQualityValue\nPump Functionality: $pumpFunctionalityValue\nLatitude: ${report['latitude']}\nLongitude: ${report['longitude']}",
         };
-        final res = await dio.post(
+        await dio.post(
           "https://livestocx.xyz/api/v1/notifications/contact-us",
           data: data,
         );
-
-        if (res.statusCode == 200 || res.statusCode == 201) {
-          isAddWaterSystemProcessing.value = false;
-
-          Get.snackbar(
-            "Message",
-            "Successful, we will contact you within 3-5 business working days to install our hardware.",
-            colorText: AppStyles.bgWhite,
-            backgroundColor: AppStyles.bgPrimary.withOpacity(0.5),
-            duration: const Duration(milliseconds: 6500),
-          );
-
-          setState(() {
-            imageUploaded = false;
-            locationController.clear();
-          });
-        }
+      } catch (apiError) {
+        log('[REPORT-API-BEST-EFFORT-FAILED] :: $apiError');
       }
+
+      isAddWaterSystemProcessing.value = false;
+
+      Get.snackbar(
+        "Message",
+        "Successful, we will contact you within 3-5 business working days to install our hardware.",
+        colorText: AppStyles.bgWhite,
+        backgroundColor: AppStyles.bgPrimary.withOpacity(0.5),
+        duration: const Duration(milliseconds: 6500),
+      );
+
+      setState(() {
+        imageUploaded = false;
+        locationController.clear();
+      });
     } catch (error) {
       isAddWaterSystemProcessing.value = false;
 
