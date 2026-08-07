@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/screens/sub_screen/add_water_system_screen.dart';
+import 'package:geo_tek/screens/sub_screen/groundwater_survey_screen.dart';
 import 'package:geo_tek/sidebar.dart';
 import 'package:geo_tek/widgets/navigation/pageheader.dart';
 import 'package:get/get.dart';
 
-import '../map/main_map.dart';
 import '../map/map_interface_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,13 +41,6 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       key: scaffoldKey,
       drawer: const SideBar(),
-      // appBar: AppBar(
-      //   iconTheme: IconThemeData(
-      //     color:AppStyles.bgBlack
-      //   ),
-      //   backgroundColor: AppStyles.bgWhite,
-      //   elevation: 0,
-      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(() => const AddWaterSystemScreen());
@@ -64,15 +57,38 @@ class _HomeScreenState extends State<HomeScreen>
           children: [
             Container(
               color: AppStyles.bgWhite,
-              // child: MainMap(),
               child: MapInterface(),
             ),
             Positioned(
               top: MediaQuery.of(context).size.height * 0.02,
-              // top: 4.0.hp,
               left: 2.0.wp,
               width: screenWidth,
               child: PageHeader(scaffoldKey: scaffoldKey),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.02,
+              right: 4.0.wp,
+              child: Material(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                elevation: 2,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () {
+                    Get.to(() => const GroundwaterSurveyScreen());
+                  },
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.science_outlined,
+                      color: AppStyles.bgPrimary,
+                      size: 26,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

@@ -5,6 +5,7 @@ import 'package:geo_tek/auth_controller.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/screens/sub_screen/about_us_screen.dart';
 import 'package:geo_tek/screens/sub_screen/contact_us_screen.dart';
+import 'package:geo_tek/screens/sub_screen/groundwater_survey_screen.dart';
 import 'package:geo_tek/screens/sub_screen/home_page.dart';
 import 'package:geo_tek/screens/sub_screen/notifications_screen.dart';
 import 'package:geo_tek/widgets/text/custom_text_widget.dart';
@@ -26,8 +27,6 @@ class _SideBarState extends State<SideBar> {
     return Drawer(
       backgroundColor: AppStyles.bgPrimary,
       width: screenWidth * 0.2,
-      // width: 60.0.wp,
-      //width: MediaQuery.of(context).size.width * 0.5,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(20), bottomRight: Radius.circular(20))),
@@ -66,17 +65,6 @@ class _SideBarState extends State<SideBar> {
               debugPrint('[HOMESCREEN]]');
             },
           ),
-
-          // ListTile(
-          //   title: Icon(
-          //     Icons.person,
-          //     color: AppStyles.bgWhite,
-          //   ),
-          //   onTap: () {
-          //     Get.to(() => ProfileScreen());
-          //     debugPrint('[PROFILE SCREEN]');
-          //   },
-          // ),
           ListTile(
             title: Icon(
               Icons.info,
@@ -84,15 +72,10 @@ class _SideBarState extends State<SideBar> {
             ),
             onTap: () {
               Get.to(() => AboutUsScreen());
-              // Get.to(() => RewardsWalletScreen());
               debugPrint('[ABOUT US SCREEN]');
             },
           ),
           ListTile(
-            // title: ImageIcon(
-            //   AssetImage('assets/icons/icon__info.png'),
-            //   color: AppStyles.bgPrimary,
-            // ),
             title: Icon(
               Icons.comment,
               color: AppStyles.bgWhite,
@@ -100,6 +83,16 @@ class _SideBarState extends State<SideBar> {
             onTap: () {
               Get.to(() => ContactUsScreen());
               debugPrint('[APP-GUIDE]');
+            },
+          ),
+          ListTile(
+            title: Icon(
+              Icons.science_outlined,
+              color: AppStyles.bgWhite,
+            ),
+            onTap: () {
+              Get.to(() => const GroundwaterSurveyScreen());
+              debugPrint('[GROUNDWATER-SURVEY]');
             },
           ),
           ListTile(
@@ -112,9 +105,6 @@ class _SideBarState extends State<SideBar> {
               debugPrint('[NOTIFICATION SCREEN]');
             },
           ),
-
-          // ListTile(),
-          // ListTile(),
           SizedBox(height: MediaQuery.of(context).size.height * 0.08),
           ListTile(
             title: Icon(
