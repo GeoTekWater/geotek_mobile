@@ -1,7 +1,4 @@
-/// Central API configuration for GeoTek backend calls.
-///
-/// Monitoring Swagger docs:
-/// https://infra-geotek.livestocx.xyz/docs/monitoring-service
+
 class ApiConfig {
   ApiConfig._();
 

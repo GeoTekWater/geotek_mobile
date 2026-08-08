@@ -5,6 +5,7 @@ import 'package:geo_tek/auth_controller.dart';
 import 'package:geo_tek/config/app_config.dart';
 import 'package:geo_tek/models/groundwater_survey_model.dart';
 import 'package:geo_tek/services/groundwater_survey_service.dart';
+import 'package:geo_tek/screens/sub_screen/groundwater_survey_result_screen.dart';
 import 'package:geo_tek/sidebar.dart';
 import 'package:geo_tek/widgets/buttons/custom_button.dart';
 import 'package:geo_tek/widgets/navigation/pageheader.dart';
@@ -121,7 +122,7 @@ class _GroundwaterSurveyScreenState extends State<GroundwaterSurveyScreen> {
           result.message,
           colorText: AppStyles.bgWhite,
           backgroundColor: AppStyles.bgPrimary.withOpacity(0.85),
-          duration: const Duration(seconds: 4),
+          duration: const Duration(seconds: 3),
         );
 
         setState(() {
@@ -133,6 +134,15 @@ class _GroundwaterSurveyScreenState extends State<GroundwaterSurveyScreen> {
           longitudeController.clear();
         });
         _prefillFromSession();
+
+        final processingResult = result.processingResult;
+        if (processingResult != null) {
+          Get.to(
+            () => GroundwaterSurveyResultScreen(
+              processingResult: processingResult,
+            ),
+          );
+        }
       } else {
         log('[SURVEY-SUBMIT-FAILED] :: ${result.statusCode} ${result.message}');
         Get.snackbar(
@@ -333,7 +343,8 @@ class _GroundwaterSurveyScreenState extends State<GroundwaterSurveyScreen> {
         ),
         const SizedBox(height: 6),
         CustomTextWidget(
-          text: 'CSV, DOC, DOCX, or PDF  ·  Required',
+          // text: 'CSV, DOC, DOCX, or PDF  ·  Required',
+          text: 'CSV . Required',
           color: AppStyles.bgGray,
           size: constructFontSize(context, 12),
         ),

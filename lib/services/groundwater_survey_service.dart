@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:geo_tek/config/api_config.dart';
 import 'package:geo_tek/models/groundwater_survey_model.dart';
 import 'package:geo_tek/models/groundwater_survey_submit_result.dart';
+import 'package:geo_tek/models/survey_agent_report_model.dart';
 
 class GroundwaterSurveyService {
   GroundwaterSurveyService({Dio? dio}) : _dio = dio ?? _createDio();
@@ -108,8 +109,18 @@ class GroundwaterSurveyService {
       );
 
       if (_isSuccessResponse(response)) {
+        SurveyProcessingResult? processingResult;
+        final data = response.data;
+        if (data is Map) {
+          processingResult = SurveyProcessingResult.fromJson(
+            Map<String, dynamic>.from(data),
+          );
+          log('[SURVEY-AGENT-REPORT] :: ${processingResult.agentReport?.title}');
+        }
+
         return GroundwaterSurveySubmitResult.success(
           statusCode: response.statusCode,
+          processingResult: processingResult,
         );
       }
 
