@@ -169,7 +169,7 @@ class GroundwaterSurveyService {
         type == DioErrorType.other;
 
     if (isConnectionIssue) {
-      return 'Cannot reach $endpoint. Check your internet connection and try again.';
+      return 'Unable to submit survey. Check your internet connection and try again.';
     }
 
     if (type == DioErrorType.response && error.response != null) {

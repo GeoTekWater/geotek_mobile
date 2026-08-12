@@ -8,9 +8,51 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:geo_tek/models/survey_agent_report_model.dart';
 
 class SurveyReportPdfService {
-  /// Builds a PDF from [agentReport] (and optional related context),
-  /// saves it to device storage, and opens it for the user.
-  Future<File> generateAndSaveAgentReportPdf({
+  /// Builds a preview PDF from [agentReport] and saves it to app storage.
+  Future<File> ensurePreviewPdf({
+    required SurveyAgentReport agentReport,
+    String? analysisId,
+    Map<String, dynamic>? report,
+    List<String> warnings = const [],
+  }) async {
+    final bytes = await _buildPdfBytes(
+      agentReport: agentReport,
+      analysisId: analysisId,
+      report: report,
+      warnings: warnings,
+    );
+    final directory = await getTemporaryDirectory();
+    final fileName = _buildFileName(agentReport.title, suffix: 'preview');
+    final file = File('${directory.path}/$fileName');
+    await file.writeAsBytes(bytes, flush: true);
+
+    log('[SURVEY-PDF-PREVIEW] :: ${file.path}');
+    return file;
+  }
+
+  /// Saves a persistent copy of the PDF to downloads or app documents.
+  Future<File> saveAgentReportPdf({
+    required SurveyAgentReport agentReport,
+    String? analysisId,
+    Map<String, dynamic>? report,
+    List<String> warnings = const [],
+  }) async {
+    final bytes = await _buildPdfBytes(
+      agentReport: agentReport,
+      analysisId: analysisId,
+      report: report,
+      warnings: warnings,
+    );
+    final directory = await _resolveSaveDirectory();
+    final fileName = _buildFileName(agentReport.title, suffix: 'download');
+    final file = File('${directory.path}/$fileName');
+    await file.writeAsBytes(bytes, flush: true);
+
+    log('[SURVEY-PDF-SAVED] :: ${file.path}');
+    return file;
+  }
+
+  Future<List<int>> _buildPdfBytes({
     required SurveyAgentReport agentReport,
     String? analysisId,
     Map<String, dynamic>? report,
@@ -92,8 +134,6 @@ class SurveyReportPdfService {
             style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey700),
           ),
           pw.SizedBox(height: 20),
-
-          // Cover / meta details when available
           if (cover.isNotEmpty || location.isNotEmpty) ...[
             _sectionTitle('Report Details'),
             if (cover['locationName'] != null)
@@ -111,7 +151,6 @@ class SurveyReportPdfService {
               _kv('Longitude', location['longitude']),
             pw.SizedBox(height: 16),
           ],
-
           _sectionTitle('Executive Summary'),
           pw.Text(
             agentReport.executiveSummary.isEmpty
@@ -121,7 +160,6 @@ class SurveyReportPdfService {
             textAlign: pw.TextAlign.justify,
           ),
           pw.SizedBox(height: 16),
-
           if (methodology.isNotEmpty) ...[
             _sectionTitle('Methodology'),
             if (methodology['fieldTechnique'] != null)
@@ -130,7 +168,6 @@ class SurveyReportPdfService {
               _kv('Instrumentation', methodology['instrumentation']),
             pw.SizedBox(height: 16),
           ],
-
           if (agentReport.artifactCaptions.isNotEmpty) ...[
             _sectionTitle('Artifact Captions'),
             ...agentReport.artifactCaptions.map((item) {
@@ -170,7 +207,6 @@ class SurveyReportPdfService {
             }),
             pw.SizedBox(height: 8),
           ],
-
           if (agentReport.cautions.isNotEmpty) ...[
             _sectionTitle('Cautions'),
             ...agentReport.cautions.map(
@@ -192,7 +228,6 @@ class SurveyReportPdfService {
             ),
             pw.SizedBox(height: 16),
           ],
-
           if (conclusion.isNotEmpty) ...[
             _sectionTitle('Conclusion'),
             if (conclusion['feasibility'] != null)
@@ -239,7 +274,6 @@ class SurveyReportPdfService {
             ],
             pw.SizedBox(height: 16),
           ],
-
           if (agentReport.pdfLayout.sectionOrder.isNotEmpty) ...[
             _sectionTitle('PDF Layout'),
             _kv(
@@ -253,7 +287,6 @@ class SurveyReportPdfService {
               ),
             pw.SizedBox(height: 16),
           ],
-
           if (warnings.isNotEmpty) ...[
             _sectionTitle('Warnings'),
             ...warnings.map(
@@ -273,17 +306,7 @@ class SurveyReportPdfService {
       ),
     );
 
-    final directory = await _resolveSaveDirectory();
-    final safeTitle = agentReport.title
-        .replaceAll(RegExp(r'[^\w\s-]'), '')
-        .replaceAll(RegExp(r'\s+'), '_');
-    final fileName =
-        'geotek_agent_report_${safeTitle.isEmpty ? 'survey' : safeTitle}_${DateTime.now().millisecondsSinceEpoch}.pdf';
-    final file = File('${directory.path}/$fileName');
-    await file.writeAsBytes(await doc.save());
-
-    log('[SURVEY-PDF-SAVED] :: ${file.path}');
-    return file;
+    return doc.save();
   }
 
   Future<OpenResult> openPdf(File file) {
@@ -299,6 +322,13 @@ class SurveyReportPdfService {
     }
 
     return getApplicationDocumentsDirectory();
+  }
+
+  String _buildFileName(String title, {required String suffix}) {
+    final safeTitle = title
+        .replaceAll(RegExp(r'[^\w\s-]'), '')
+        .replaceAll(RegExp(r'\s+'), '_');
+    return 'geotek_agent_report_${safeTitle.isEmpty ? 'survey' : safeTitle}_${suffix}_${DateTime.now().millisecondsSinceEpoch}.pdf';
   }
 
   pw.Widget _sectionTitle(String title) {
