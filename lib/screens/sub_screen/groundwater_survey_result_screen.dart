@@ -30,17 +30,19 @@ class _GroundwaterSurveyResultScreenState
   bool _isPdfReady = false;
   File? _previewPdfFile;
 
-  SurveyAgentReport? get agentReport => widget.processingResult.agentReport;
+  String get pdfUrl => widget.processingResult.pdfUrl?.trim() ?? '';
+  bool get hasPdfUrl => pdfUrl.isNotEmpty;
 
   @override
   void initState() {
     super.initState();
-    _preparePreviewPdf();
+    if (hasPdfUrl) {
+      _preparePreviewPdf();
+    }
   }
 
   Future<void> _preparePreviewPdf() async {
-    final report = agentReport;
-    if (report == null) {
+    if (!hasPdfUrl) {
       return;
     }
 
@@ -50,11 +52,9 @@ class _GroundwaterSurveyResultScreenState
     });
 
     try {
-      final previewFile = await _pdfService.ensurePreviewPdf(
-        agentReport: report,
-        analysisId: widget.processingResult.analysisId,
-        report: widget.processingResult.report,
-        warnings: widget.processingResult.warnings,
+      final previewFile = await _pdfService.downloadPreviewPdfFromUrl(
+        pdfUrl: pdfUrl,
+        fileName: 'groundwater_survey_preview_${widget.processingResult.analysisId}',
       );
 
       if (!mounted) return;
@@ -66,7 +66,7 @@ class _GroundwaterSurveyResultScreenState
       if (!mounted) return;
       Get.snackbar(
         'Preview unavailable',
-        'Could not generate the PDF preview.',
+        'Could not load the PDF preview.',
         colorText: AppStyles.bgWhite,
         backgroundColor: AppStyles.bgBrightRed.withOpacity(0.7),
       );
@@ -79,11 +79,10 @@ class _GroundwaterSurveyResultScreenState
   }
 
   Future<void> _downloadPdf() async {
-    final report = agentReport;
-    if (report == null) {
+    if (!hasPdfUrl) {
       Get.snackbar(
         'Unavailable',
-        'No agent report was returned by the server.',
+        'No PDF URL available.',
         colorText: AppStyles.bgWhite,
         backgroundColor: AppStyles.bgBrightRed.withOpacity(0.7),
       );
@@ -95,11 +94,10 @@ class _GroundwaterSurveyResultScreenState
         _isSavingPdf = true;
       });
 
-      final File pdfFile = await _pdfService.saveAgentReportPdf(
-        agentReport: report,
-        analysisId: widget.processingResult.analysisId,
-        report: widget.processingResult.report,
-        warnings: widget.processingResult.warnings,
+      final File pdfFile = await _pdfService.savePdfFromUrl(
+        pdfUrl: pdfUrl,
+        fileName:
+            'groundwater_survey_${widget.processingResult.analysisId}_download',
       );
 
       if (!mounted) return;
@@ -115,7 +113,7 @@ class _GroundwaterSurveyResultScreenState
       if (!mounted) return;
       Get.snackbar(
         'Error',
-        'Could not generate or open the PDF.',
+        'Could not download the PDF.',
         colorText: AppStyles.bgWhite,
         backgroundColor: AppStyles.bgBrightRed.withOpacity(0.7),
       );
@@ -129,8 +127,6 @@ class _GroundwaterSurveyResultScreenState
 
   @override
   Widget build(BuildContext context) {
-    final report = agentReport;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -148,7 +144,7 @@ class _GroundwaterSurveyResultScreenState
                   Expanded(
                     child: ElevatedButton(
                       onPressed:
-                          report == null || _isSavingPdf ? null : _downloadPdf,
+                          !hasPdfUrl || _isSavingPdf ? null : _downloadPdf,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppStyles.bgPrimary,
                         foregroundColor: Colors.white,
@@ -172,12 +168,12 @@ class _GroundwaterSurveyResultScreenState
               ),
             ),
             Expanded(
-              child: report == null
+              child: !hasPdfUrl
                   ? const Center(
                       child: Padding(
                         padding: EdgeInsets.all(24),
                         child: Text(
-                          'No agent report available.',
+                          'No PDF URL available.',
                           textAlign: TextAlign.center,
                         ),
                       ),

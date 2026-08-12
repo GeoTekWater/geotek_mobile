@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:http/http.dart' as http;
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -8,6 +9,44 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:geo_tek/models/survey_agent_report_model.dart';
 
 class SurveyReportPdfService {
+  /// Downloads a remote PDF to temporary storage for in-app preview.
+  Future<File> downloadPreviewPdfFromUrl({
+    required String pdfUrl,
+    String? fileName,
+  }) async {
+    final bytes = await _downloadPdfBytes(pdfUrl);
+    final directory = await getTemporaryDirectory();
+    final resolvedFileName = _resolveRemotePdfFileName(
+      pdfUrl,
+      fileName: fileName,
+      suffix: 'preview',
+    );
+    final file = File('${directory.path}/$resolvedFileName');
+    await file.writeAsBytes(bytes, flush: true);
+
+    log('[SURVEY-PDF-PREVIEW-DOWNLOADED] :: ${file.path}');
+    return file;
+  }
+
+  /// Downloads a remote PDF to persistent storage for saving/sharing.
+  Future<File> savePdfFromUrl({
+    required String pdfUrl,
+    String? fileName,
+  }) async {
+    final bytes = await _downloadPdfBytes(pdfUrl);
+    final directory = await _resolveSaveDirectory();
+    final resolvedFileName = _resolveRemotePdfFileName(
+      pdfUrl,
+      fileName: fileName,
+      suffix: 'download',
+    );
+    final file = File('${directory.path}/$resolvedFileName');
+    await file.writeAsBytes(bytes, flush: true);
+
+    log('[SURVEY-PDF-SAVED] :: ${file.path}');
+    return file;
+  }
+
   /// Builds a preview PDF from [agentReport] and saves it to app storage.
   Future<File> ensurePreviewPdf({
     required SurveyAgentReport agentReport,
@@ -313,6 +352,23 @@ class SurveyReportPdfService {
     return OpenFilex.open(file.path);
   }
 
+  Future<List<int>> _downloadPdfBytes(String pdfUrl) async {
+    final uri = Uri.tryParse(pdfUrl);
+    if (uri == null) {
+      throw const FormatException('Invalid PDF URL.');
+    }
+
+    final response = await http.get(uri);
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw HttpException(
+        'Failed to download PDF (${response.statusCode}).',
+        uri: uri,
+      );
+    }
+
+    return response.bodyBytes;
+  }
+
   Future<Directory> _resolveSaveDirectory() async {
     try {
       final downloads = await getDownloadsDirectory();
@@ -329,6 +385,31 @@ class SurveyReportPdfService {
         .replaceAll(RegExp(r'[^\w\s-]'), '')
         .replaceAll(RegExp(r'\s+'), '_');
     return 'geotek_agent_report_${safeTitle.isEmpty ? 'survey' : safeTitle}_${suffix}_${DateTime.now().millisecondsSinceEpoch}.pdf';
+  }
+
+  String _resolveRemotePdfFileName(
+    String pdfUrl, {
+    String? fileName,
+    required String suffix,
+  }) {
+    final preferredName = (fileName ?? '').trim();
+    if (preferredName.isNotEmpty) {
+      return preferredName.toLowerCase().endsWith('.pdf')
+          ? preferredName
+          : '$preferredName.pdf';
+    }
+
+    final uri = Uri.tryParse(pdfUrl);
+    final lastSegment = uri?.pathSegments.isNotEmpty == true
+        ? uri!.pathSegments.last
+        : '';
+    final cleanedSegment = lastSegment.split('?').first.trim();
+    if (cleanedSegment.toLowerCase().endsWith('.pdf') &&
+        cleanedSegment.isNotEmpty) {
+      return cleanedSegment;
+    }
+
+    return 'groundwater_survey_${suffix}_${DateTime.now().millisecondsSinceEpoch}.pdf';
   }
 
   pw.Widget _sectionTitle(String title) {
