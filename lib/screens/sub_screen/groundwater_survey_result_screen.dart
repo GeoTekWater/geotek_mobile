@@ -54,7 +54,8 @@ class _GroundwaterSurveyResultScreenState
     try {
       final previewFile = await _pdfService.downloadPreviewPdfFromUrl(
         pdfUrl: pdfUrl,
-        fileName: 'groundwater_survey_preview_${widget.processingResult.analysisId}',
+        fileName:
+            'groundwater_survey_preview_${widget.processingResult.analysisId}',
       );
 
       if (!mounted) return;
@@ -132,41 +133,6 @@ class _GroundwaterSurveyResultScreenState
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-              child: Row(
-                children: [
-                  OutlinedButton(
-                    onPressed: () => Get.back(),
-                    child: const Text('Back'),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed:
-                          !hasPdfUrl || _isSavingPdf ? null : _downloadPdf,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppStyles.bgPrimary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                      ),
-                      child: _isSavingPdf
-                          ? const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white,
-                                ),
-                              ),
-                            )
-                          : const Text('Download PDF'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: !hasPdfUrl
                   ? const Center(
@@ -179,6 +145,40 @@ class _GroundwaterSurveyResultScreenState
                       ),
                     )
                   : _buildPreviewContent(),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        child: Row(
+          children: [
+            // OutlinedButton(
+            //   onPressed: () => Get.back(),
+            //   child: const Text('Back'),
+            // ),
+            // const SizedBox(width: 12),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: !hasPdfUrl || _isSavingPdf ? null : _downloadPdf,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppStyles.bgPrimary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                child: _isSavingPdf
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
+                        ),
+                      )
+                    : const Text('Download PDF'),
+              ),
             ),
           ],
         ),
